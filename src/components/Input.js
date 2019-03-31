@@ -10,14 +10,17 @@ class Input extends React.Component {
       input: ""
     };
   }
+
   onChange(event) {
     this.setState({ input: event.target.value });
   }
+
   onSubmit(event) {
     event.preventDefault();
     const { input } = this.state;
     this.validateInput(input);
   }
+
   validateInput(input) {
     if (input.trim() === "") {
       return this.onValidationFailure();
@@ -31,16 +34,27 @@ class Input extends React.Component {
       return this.onValidationSuccess(input);
     }
   }
+
   onValidationFailure() {
     this.setState({
       error: "Please enter a valid 5 digit zip code",
       input: ""
     });
   }
+
   onValidationSuccess(input) {
+    const zips = this.props.zips;
+    if (zips.includes(input)) {
+      return this.onDuplicateEntry();
+    }
     this.props.addLocation(input);
     this.setState({ error: null, input: "" });
   }
+
+  onDuplicateEntry() {
+    this.setState({ error: "That zip already exists", input: "" });
+  }
+
   render() {
     const { error, input } = this.state;
     return (

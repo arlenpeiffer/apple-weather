@@ -7,7 +7,6 @@ class App extends React.Component {
     super(props);
     this.addLocation = this.addLocation.bind(this);
     this.state = {
-      error: null,
       zips: []
     };
   }
@@ -20,11 +19,10 @@ class App extends React.Component {
     }
   }
   render() {
-    const { error, zips } = this.state;
+    const { zips } = this.state;
     return (
       <div>
-        <Input addLocation={this.addLocation} />
-        {error && <p>{error}</p>}
+        <Input addLocation={this.addLocation} zips={zips} />
         <Locations zips={zips} />
       </div>
     );
