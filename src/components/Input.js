@@ -25,10 +25,14 @@ class Input extends React.Component {
     if (input.trim() === "") {
       return this.onValidationFailure();
     }
+    if (isNaN(input)) {
+      return this.onValidationFailure();
+    }
     if (input.length !== 5) {
       return this.onValidationFailure();
     }
-    if (!Number.isInteger(Number(input))) {
+    if (input.includes(".")) {
+      // if (!Number.isInteger(Number(input))) {
       return this.onValidationFailure();
     } else {
       return this.onValidationSuccess(input);
