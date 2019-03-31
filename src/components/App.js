@@ -7,18 +7,24 @@ class App extends React.Component {
     super(props);
     this.addLocation = this.addLocation.bind(this);
     this.state = {
-      zips: [91030]
+      error: null,
+      zips: []
     };
   }
   addLocation(zip) {
     const { zips } = this.state;
-    this.setState({ zips: zips.concat(zip) });
+    if (zips.includes(zip)) {
+      return this.setState({ error: "That zip already exists" });
+    } else {
+      return this.setState({ zips: zips.concat(zip) });
+    }
   }
   render() {
-    const { zips } = this.state;
+    const { error, zips } = this.state;
     return (
       <div>
         <Input addLocation={this.addLocation} />
+        {error && <p>{error}</p>}
         <Locations zips={zips} />
       </div>
     );
