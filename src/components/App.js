@@ -5,25 +5,55 @@ import Locations from "./Locations";
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.addLocation = this.addLocation.bind(this);
+    this.validateInput = this.validateInput.bind(this);
     this.state = {
-      zips: []
+      error: null,
+      locationsGeo: [],
+      locationsZip: []
     };
   }
-  addLocation(zip) {
-    const { zips } = this.state;
-    if (zips.includes(zip)) {
-      return this.setState({ error: "That zip already exists" });
+
+  validateInput(input) {
+    if (isNaN(input)) {
+      return this.onValidationFailure();
+    }
+    if (input.includes(".")) {
+      return this.onValidationFailure();
+    }
+    if (input.trim() === "") {
+      return this.onValidationFailure();
+    }
+    if (input.length !== 5) {
+      return this.onValidationFailure();
     } else {
-      return this.setState({ zips: zips.concat(zip) });
+      return this.onValidationSuccess(input);
     }
   }
+  onValidationFailure() {
+    this.setState({
+      error: "Please enter a valid 5 digit zip code"
+    });
+  }
+  onValidationSuccess(input) {
+    const { locationsZip } = this.state;
+    if (locationsZip.includes(input)) {
+      return this.setState({ error: "That zip already exists" });
+    }
+    this.addLocation(input);
+  }
+
+  addLocation(input) {
+    const { locationsZip } = this.state;
+    this.setState({ error: null, locationsZip: locationsZip.concat(input) });
+  }
+
   render() {
-    const { zips } = this.state;
+    const { error, locationsZip } = this.state;
     return (
       <div>
-        <Input addLocation={this.addLocation} zips={zips} />
-        <Locations zips={zips} />
+        <Input validateInput={this.validateInput} />
+        {error && <p>{error}</p>}
+        <Locations locations={locationsZip} />
       </div>
     );
   }

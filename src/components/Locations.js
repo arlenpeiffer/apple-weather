@@ -5,8 +5,8 @@ function Locations(props) {
   return (
     <div>
       Locations:
-      {props.zips.map(zip => (
-        <Location zip={zip} />
+      {props.locations.map(location => (
+        <Location key={location} location={location} />
       ))}
     </div>
   );
