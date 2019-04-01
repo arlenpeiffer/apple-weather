@@ -8,13 +8,9 @@ class App extends React.Component {
     this.validateInput = this.validateInput.bind(this);
     this.state = {
       error: null,
-      locationsGeo: [],
-      locationsZip: []
+      locationsGeo: ["34.108981,-118.156508"],
+      locationsZip: ["91030"]
     };
-  }
-
-  componentDidMount() {
-    this.fetchGeocode();
   }
 
   validateInput(input) {
@@ -49,13 +45,6 @@ class App extends React.Component {
   addLocation(input) {
     const { locationsZip } = this.state;
     this.setState({ error: null, locationsZip: locationsZip.concat(input) });
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    const { locationsZip } = this.state;
-    if (locationsZip > prevState.locationsZip) {
-      return this.fetchGeocode();
-    }
   }
 
   fetchGeocode() {
