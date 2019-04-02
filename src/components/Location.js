@@ -25,7 +25,8 @@ function Location(props) {
       />
       <Parameter
         title="WIND"
-        measurement="figure out converting and combining {props.data.wind.direction} {props.data.wind.speed} as a single prop"
+        measurement={props.data.wind}
+        // measurement="figure out converting and combining {props.data.wind.direction} {props.data.wind.speed} as a single prop"
       />
       <Parameter title="FEELS LIKE" measurement={props.data.feelsLike + "°"} />
       <Parameter
