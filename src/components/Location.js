@@ -1,4 +1,5 @@
 import React from "react";
+import Parameter from "./Parameter";
 
 function Location(props) {
   return (
@@ -9,48 +10,28 @@ function Location(props) {
       <div>Hourly goes here</div>
       <div>Daily forecast goes here</div>
       <p>Detailed description goes here</p>
-      <div>
-        <p>SUNRISE</p>
-        <p>goes here</p>
-      </div>
-      <div>
-        <p>SUNSET</p>
-        <p>goes here</p>
-      </div>
-      <div>
-        <p>CHANCE OF RAIN</p>
-        <p>{props.data.precipitationChance}</p>
-      </div>
-      <div>
-        <p>HUMIDITY</p>
-        <p>{props.data.humidity}%</p>
-      </div>
-      <div>
-        <p>WIND</p>
-        <p>
-          {props.data.wind.direction} {props.data.wind.speed}
-        </p>
-      </div>
-      <div>
-        <p>FEELS LIKE</p>
-        <p>{props.data.feelsLike}°</p>
-      </div>
-      <div>
-        <p>PRECIPITATION</p>
-        <p>{props.data.precipitation} in</p>
-      </div>
-      <div>
-        <p>PRESSURE</p>
-        <p>{props.data.pressure}</p>
-      </div>
-      <div>
-        <p>VISIBILITY</p>
-        <p>{props.data.visibility}</p>
-      </div>
-      <div>
-        <p>UV INDEX</p>
-        <p>{props.data.uvIndex}</p>
-      </div>
+      <Parameter title="SUNRISE" measurement="goes here" />
+      <Parameter title="SUNSET" measurement="goes here" />
+      <Parameter
+        title="CHANCE OF RAIN"
+        measurement={props.data.precipitationChance + "%"}
+      />
+      <Parameter title="HUMIDITY" measurement={props.data.humidity + "%"} />
+      <Parameter
+        title="WIND"
+        measurement="figure out converting and combining {props.data.wind.direction} {props.data.wind.speed} as a single prop"
+      />
+      <Parameter title="FEELS LIKE" measurement={props.data.feelsLike + "°"} />
+      <Parameter
+        title="PRECIPITATION"
+        measurement={props.data.precipitation + " in"}
+      />
+      <Parameter title="PRESSURE" measurement={props.data.pressure} />
+      <Parameter
+        title="VISIBILITY"
+        measurement={props.data.visibility + " mi"}
+      />
+      <Parameter title="UV INDEX" measurement={props.data.uvIndex} />
     </div>
   );
 }
