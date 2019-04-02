@@ -5,9 +5,10 @@ function Locations(props) {
   return (
     <div>
       Locations:
-      {props.locations.map(location => (
+      {props.locations.map((location, index) => (
         <LocationContainer
-          key={location.name}
+          index={index}
+          key={index}
           location={location.geocode}
           name={location.name}
         />

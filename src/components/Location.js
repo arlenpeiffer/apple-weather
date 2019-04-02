@@ -3,7 +3,7 @@ import Parameter from "./Parameter";
 
 function Location(props) {
   return (
-    <div key={props.name}>
+    <div>
       <p>{props.name}</p>
       <p>{props.data.description}</p>
       <p>{props.data.currentTemp}°</p>
