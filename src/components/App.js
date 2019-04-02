@@ -64,17 +64,13 @@ class App extends React.Component {
     locationsZip.map(location =>
       fetch(apiURL + apiKey + apiFormat + location + apiUnits)
         .then(response => response.json())
-        .then(
-          data =>
-            this.setState({
-              locations: locations.concat({
-                name: data.city + ", " + data.state,
-                geocode: data.lat + "," + data.lng
-              })
+        .then(data =>
+          this.setState({
+            locations: locations.concat({
+              name: data.city + ", " + data.state,
+              geocode: data.lat + "," + data.lng
             })
-          // this.setState({
-          //   locationsGeo: locationsGeo.concat(data.lat + "," + data.lng)
-          // })
+          })
         )
     );
   }
