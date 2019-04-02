@@ -16,17 +16,12 @@ function Location(props) {
         title="CHANCE OF RAIN"
         measurement={props.data.precipitationChance + "%"}
       />
-      <Parameter
-        title="HUMIDITY"
-        measurement={
-          props.data.humidity +
-          "% (display avg humidity for the day rather than current humidity?)"
-        }
-      />
+      <Parameter title="HUMIDITY" measurement={props.data.humidity + "%"} />
       <Parameter
         title="WIND"
-        measurement={props.data.wind}
-        // measurement="figure out converting and combining {props.data.wind.direction} {props.data.wind.speed} as a single prop"
+        measurement={
+          props.data.wind.direction + " " + props.data.wind.speed + " mph"
+        }
       />
       <Parameter title="FEELS LIKE" measurement={props.data.feelsLike + "°"} />
       <Parameter

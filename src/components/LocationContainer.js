@@ -29,6 +29,8 @@ class LocationContainer extends React.Component {
     const inHg = mbar / 33.863886666667;
     return inHg.toFixed(2);
   }
+
+  // FOR LATER: FIND A BETTER/SIMPLER WAY TO CONVERT WIND BEARING //
   convertWindBearing(degree) {
     if (degree >= 348.75 && degree < 11.25) {
       return "N";
@@ -79,6 +81,7 @@ class LocationContainer extends React.Component {
       return "NNW";
     }
   }
+
   componentDidMount() {
     const proxy = "https://cors-anywhere.herokuapp.com/";
     const api =
@@ -103,11 +106,10 @@ class LocationContainer extends React.Component {
             pressure: this.convertPressure(data.currently.pressure),
             uvIndex: data.currently.uvIndex,
             visibility: Math.round(data.currently.visibility),
-            wind: this.convertWindBearing(data.currently.windBearing)
-            // wind: {
-            //   direction: data.currently.windBearing,
-            //   speed: data.currently.windSpeed
-            // }
+            wind: {
+              direction: this.convertWindBearing(data.currently.windBearing),
+              speed: Math.round(data.currently.windSpeed)
+            }
           },
           error: null,
           loading: false
