@@ -1,12 +1,12 @@
 import React from "react";
-import Location from "./Location";
+import LocationContainer from "./LocationContainer";
 
 function Locations(props) {
   return (
     <div>
       Locations:
       {props.locations.map(location => (
-        <Location location={location.geocode} name={location.name} />
+        <LocationContainer location={location.geocode} name={location.name} />
       ))}
     </div>
   );

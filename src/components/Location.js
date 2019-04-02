@@ -1,114 +1,58 @@
 import React from "react";
 
-class Location extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: {
-        currentTemp: null,
-        description: null,
-        feelsLike: null,
-        humidity: null,
-        icon: null,
-        precipitation: null,
-        precipitationChance: null,
-        pressure: null,
-        uvIndex: null,
-        visibility: null,
-        wind: {
-          direction: null,
-          speed: null
-        }
-      },
-      error: null,
-      loading: false
-    };
-  }
-  componentDidMount() {
-    const proxy = "https://cors-anywhere.herokuapp.com/";
-    const api =
-      "https://api.darksky.net/forecast/1b3d30bceaa757a136e3c1dfad9801d8/";
-    fetch(proxy + api + this.props.location)
-      .then(response => response.json())
-      .then(data =>
-        this.setState({
-          data: {
-            currentTemp: data.currently.temperature,
-            description: data.currently.summary,
-            feelsLike: data.currently.apparentTemperature,
-            humidity: data.currently.humidity,
-            icon: data.currently.icon,
-            precipitation: data.currently.precipIntensity,
-            precipitationChance: data.currently.precipProbability,
-            pressure: data.currently.pressure,
-            uvIndex: data.currently.uvIndex,
-            visibility: data.currently.visibility,
-            wind: {
-              direction: data.currently.windBearing,
-              speed: data.currently.windSpeed
-            }
-          },
-          error: null,
-          loading: false
-        })
-      );
-    // .then(data => console.log(data));
-  }
-  render() {
-    const { data } = this.state;
-    return (
-      <div key={this.props.name}>
-        <p>{this.props.name}</p>
-        <p>{data.description}</p>
-        <p>{data.currentTemp}°</p>
-        <div>Hourly goes here</div>
-        <div>Daily forecast goes here</div>
-        <p>Detailed description goes here</p>
-        <div>
-          <p>SUNRISE</p>
-          <p>goes here</p>
-        </div>
-        <div>
-          <p>SUNSET</p>
-          <p>goes here</p>
-        </div>
-        <div>
-          <p>CHANCE OF RAIN</p>
-          <p>{data.precipitationChance}</p>
-        </div>
-        <div>
-          <p>HUMIDITY</p>
-          <p>{data.humidity}%</p>
-        </div>
-        <div>
-          <p>WIND</p>
-          <p>
-            {data.wind.direction} {data.wind.speed}
-          </p>
-        </div>
-        <div>
-          <p>FEELS LIKE</p>
-          <p>{data.feelsLike}°</p>
-        </div>
-        <div>
-          <p>PRECIPITATION</p>
-          <p>{data.precipitation} in</p>
-        </div>
-        <div>
-          <p>PRESSURE</p>
-          <p>{data.pressure}</p>
-        </div>
-        <div>
-          <p>VISIBILITY</p>
-          <p>{data.visibility}</p>
-        </div>
-        <div>
-          <p>UV INDEX</p>
-          <p>{data.uvIndex}</p>
-        </div>
+function Location(props) {
+  return (
+    <div key={props.name}>
+      <p>{props.name}</p>
+      <p>{props.data.description}</p>
+      <p>{props.data.currentTemp}°</p>
+      <div>Hourly goes here</div>
+      <div>Daily forecast goes here</div>
+      <p>Detailed description goes here</p>
+      <div>
+        <p>SUNRISE</p>
+        <p>goes here</p>
       </div>
-    );
-  }
+      <div>
+        <p>SUNSET</p>
+        <p>goes here</p>
+      </div>
+      <div>
+        <p>CHANCE OF RAIN</p>
+        <p>{props.data.precipitationChance}</p>
+      </div>
+      <div>
+        <p>HUMIDITY</p>
+        <p>{props.data.humidity}%</p>
+      </div>
+      <div>
+        <p>WIND</p>
+        <p>
+          {props.data.wind.direction} {props.data.wind.speed}
+        </p>
+      </div>
+      <div>
+        <p>FEELS LIKE</p>
+        <p>{props.data.feelsLike}°</p>
+      </div>
+      <div>
+        <p>PRECIPITATION</p>
+        <p>{props.data.precipitation} in</p>
+      </div>
+      <div>
+        <p>PRESSURE</p>
+        <p>{props.data.pressure}</p>
+      </div>
+      <div>
+        <p>VISIBILITY</p>
+        <p>{props.data.visibility}</p>
+      </div>
+      <div>
+        <p>UV INDEX</p>
+        <p>{props.data.uvIndex}</p>
+      </div>
+    </div>
+  );
 }
 
 export default Location;
