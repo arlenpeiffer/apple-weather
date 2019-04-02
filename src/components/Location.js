@@ -32,7 +32,7 @@ function Location(props) {
         title="PRECIPITATION"
         measurement={props.data.precipitation + " in"}
       />
-      <Parameter title="PRESSURE" measurement={props.data.pressure} />
+      <Parameter title="PRESSURE" measurement={props.data.pressure + " inHg"} />
       <Parameter
         title="VISIBILITY"
         measurement={props.data.visibility + " mi"}

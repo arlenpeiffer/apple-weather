@@ -25,6 +25,10 @@ class LocationContainer extends React.Component {
       loading: true
     };
   }
+  convertPressure(mbar) {
+    const inHg = mbar / 33.863886666667;
+    return inHg.toFixed(2);
+  }
   componentDidMount() {
     const proxy = "https://cors-anywhere.herokuapp.com/";
     const api =
@@ -46,7 +50,7 @@ class LocationContainer extends React.Component {
             icon: data.currently.icon,
             precipitation: data.currently.precipIntensity,
             precipitationChance: data.currently.precipProbability,
-            pressure: data.currently.pressure,
+            pressure: this.convertPressure(data.currently.pressure),
             uvIndex: data.currently.uvIndex,
             visibility: Math.round(data.currently.visibility),
             wind: {
