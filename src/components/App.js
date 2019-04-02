@@ -8,7 +8,12 @@ class App extends React.Component {
     this.validateInput = this.validateInput.bind(this);
     this.state = {
       error: null,
-      locationsGeo: ["34.108981,-118.156508"],
+      locations: [
+        {
+          name: "South Pasadena, CA",
+          geocode: "34.108981,-118.156508"
+        }
+      ],
       locationsZip: ["91030"]
     };
   }
@@ -54,26 +59,33 @@ class App extends React.Component {
     const apiFormat = "info.json/";
     const apiUnits = "/degrees";
 
-    const { locationsGeo, locationsZip } = this.state;
+    const { locations, locationsZip } = this.state;
     // this.setState({ error: null });
     locationsZip.map(location =>
       fetch(apiURL + apiKey + apiFormat + location + apiUnits)
         .then(response => response.json())
-        .then(data =>
-          this.setState({
-            locationsGeo: locationsGeo.concat(data.lat + "," + data.lng)
-          })
+        .then(
+          data =>
+            this.setState({
+              locations: locations.concat({
+                name: data.city + ", " + data.state,
+                geocode: data.lat + "," + data.lng
+              })
+            })
+          // this.setState({
+          //   locationsGeo: locationsGeo.concat(data.lat + "," + data.lng)
+          // })
         )
     );
   }
 
   render() {
-    const { error, locationsGeo } = this.state;
+    const { error, locations } = this.state;
     return (
       <div>
         <Input validateInput={this.validateInput} />
         {error && <p>{error}</p>}
-        <Locations locations={locationsGeo} />
+        <Locations locations={locations} />
       </div>
     );
   }

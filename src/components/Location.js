@@ -57,8 +57,8 @@ class Location extends React.Component {
   render() {
     const { data } = this.state;
     return (
-      <div key={this.props.location}>
-        <p>Location Name:</p>
+      <div key={this.props.name}>
+        <p>{this.props.name}</p>
         <p>{data.description}</p>
         <p>{data.currentTemp}°</p>
         <div>Hourly goes here</div>

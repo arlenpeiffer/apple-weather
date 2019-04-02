@@ -6,7 +6,7 @@ function Locations(props) {
     <div>
       Locations:
       {props.locations.map(location => (
-        <Location key={location} location={location} />
+        <Location location={location.geocode} name={location.name} />
       ))}
     </div>
   );
