@@ -6,7 +6,11 @@ function Locations(props) {
     <div>
       Locations:
       {props.locations.map(location => (
-        <LocationContainer location={location.geocode} name={location.name} />
+        <LocationContainer
+          key={location.name}
+          location={location.geocode}
+          name={location.name}
+        />
       ))}
     </div>
   );
