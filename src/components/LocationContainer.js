@@ -79,52 +79,6 @@ class LocationContainer extends React.Component {
       return "NNW";
     }
   }
-  degToCompass(num) {
-    while (num < 0) num += 360;
-    while (num >= 360) num -= 360;
-    const val = Math.round((num - 11.25) / 22.5);
-    const arr = [
-      "N",
-      "NNE",
-      "NE",
-      "ENE",
-      "E",
-      "ESE",
-      "SE",
-      "SSE",
-      "S",
-      "SSW",
-      "SW",
-      "WSW",
-      "W",
-      "WNW",
-      "NW",
-      "NNW"
-    ];
-    return arr[Math.abs(val)];
-  }
-  degToCompass2(num) {
-    var val = Math.floor(num / 22.5 + 0.5);
-    var arr = [
-      "N",
-      "NNE",
-      "NE",
-      "ENE",
-      "E",
-      "ESE",
-      "SE",
-      "SSE",
-      "S",
-      "SSW",
-      "SW",
-      "WSW",
-      "W",
-      "WNW",
-      "NW",
-      "NNW"
-    ];
-    return arr[val % 16];
-  }
   componentDidMount() {
     const proxy = "https://cors-anywhere.herokuapp.com/";
     const api =
@@ -149,7 +103,7 @@ class LocationContainer extends React.Component {
             pressure: this.convertPressure(data.currently.pressure),
             uvIndex: data.currently.uvIndex,
             visibility: Math.round(data.currently.visibility),
-            wind: this.degToCompass2(data.currently.windBearing)
+            wind: this.convertWindBearing(data.currently.windBearing)
             // wind: {
             //   direction: data.currently.windBearing,
             //   speed: data.currently.windSpeed
