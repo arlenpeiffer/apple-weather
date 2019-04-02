@@ -104,6 +104,8 @@ class LocationContainer extends React.Component {
             precipitation: data.currently.precipIntensity,
             precipitationChance: data.currently.precipProbability,
             pressure: this.convertPressure(data.currently.pressure),
+            sunrise: data.daily.data[0].sunriseTime,
+            sunset: data.daily.data[0].sunsetTime,
             uvIndex: data.currently.uvIndex,
             visibility: Math.round(data.currently.visibility),
             wind: {

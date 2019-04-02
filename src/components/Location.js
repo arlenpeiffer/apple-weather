@@ -10,8 +10,8 @@ function Location(props) {
       <div>Hourly goes here</div>
       <div>Daily forecast goes here</div>
       <p>Detailed description goes here</p>
-      <Parameter title="SUNRISE" measurement="goes here" />
-      <Parameter title="SUNSET" measurement="goes here" />
+      <Parameter title="SUNRISE" measurement={props.data.sunrise} />
+      <Parameter title="SUNSET" measurement={props.data.sunset} />
       <Parameter
         title="CHANCE OF RAIN"
         measurement={props.data.precipitationChance + "%"}
