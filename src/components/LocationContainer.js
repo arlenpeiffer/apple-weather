@@ -39,16 +39,16 @@ class LocationContainer extends React.Component {
       .then(data =>
         this.setState({
           data: {
-            currentTemp: data.currently.temperature,
+            currentTemp: Math.round(data.currently.temperature),
             description: data.currently.summary,
-            feelsLike: data.currently.apparentTemperature,
-            humidity: data.currently.humidity,
+            feelsLike: Math.round(data.currently.apparentTemperature),
+            humidity: Math.round(data.currently.humidity * 100),
             icon: data.currently.icon,
             precipitation: data.currently.precipIntensity,
             precipitationChance: data.currently.precipProbability,
             pressure: data.currently.pressure,
             uvIndex: data.currently.uvIndex,
-            visibility: data.currently.visibility,
+            visibility: Math.round(data.currently.visibility),
             wind: {
               direction: data.currently.windBearing,
               speed: data.currently.windSpeed

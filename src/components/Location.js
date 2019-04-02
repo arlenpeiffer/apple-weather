@@ -4,7 +4,7 @@ import Parameter from "./Parameter";
 function Location(props) {
   return (
     <div>
-      <p>{props.name}</p>
+      <h1>{props.name}</h1>
       <p>{props.data.description}</p>
       <p>{props.data.currentTemp}°</p>
       <div>Hourly goes here</div>
@@ -16,7 +16,13 @@ function Location(props) {
         title="CHANCE OF RAIN"
         measurement={props.data.precipitationChance + "%"}
       />
-      <Parameter title="HUMIDITY" measurement={props.data.humidity + "%"} />
+      <Parameter
+        title="HUMIDITY"
+        measurement={
+          props.data.humidity +
+          "% (display avg humidity for the day rather than current humidity?)"
+        }
+      />
       <Parameter
         title="WIND"
         measurement="figure out converting and combining {props.data.wind.direction} {props.data.wind.speed} as a single prop"

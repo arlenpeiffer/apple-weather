@@ -12,6 +12,10 @@ class App extends React.Component {
         {
           name: "South Pasadena, CA",
           geocode: "34.108981,-118.156508"
+        },
+        {
+          name: "Washington, IA",
+          geocode: "41.299371,-91.711634"
         }
       ],
       locationsZip: ["91030"]
