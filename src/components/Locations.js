@@ -9,8 +9,10 @@ function Locations(props) {
         <LocationContainer
           index={index}
           key={index}
-          location={location.geocode}
           name={location.name}
+          geocode={location.geocode}
+          // timezone={location.timezone}
+          utcOffset={location.utcOffset}
         />
       ))}
     </div>

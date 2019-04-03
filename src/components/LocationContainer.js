@@ -82,18 +82,30 @@ class LocationContainer extends React.Component {
     }
   }
 
+  // convertEpoch(timestamp) {
+  //   const timezone = this.props.timezone;
+  //   const options = {
+  //     timezone: timezone,
+  //     hour12: true,
+  //     timeZoneName: "long"
+  //   };
+  //   const date = new Date(timestamp);
+  //   return date.toLocaleString("en-US", options);
+  // }
+
   convertEpoch(timestamp) {
-    const date = new Date(timestamp * 1000);
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
-    return date.toTimeString();
+    const offset = this.props.utcOffset;
+    const d = new Date(timestamp);
+    const utc = d.getTime() + d.getTimezoneOffset() * 60000;
+    const nd = new Date(utc + 3600000 * offset);
+    return nd.toLocaleString();
   }
 
   componentDidMount() {
     const proxy = "https://cors-anywhere.herokuapp.com/";
     const api =
       "https://api.darksky.net/forecast/1b3d30bceaa757a136e3c1dfad9801d8/";
-    fetch(proxy + api + this.props.location)
+    fetch(proxy + api + this.props.geocode)
       .then(response => {
         if (response.ok) {
           this.setState({ loading: true });
@@ -111,8 +123,9 @@ class LocationContainer extends React.Component {
             precipitation: data.currently.precipIntensity,
             precipitationChance: data.currently.precipProbability,
             pressure: this.convertPressure(data.currently.pressure),
-            sunrise: this.convertEpoch(data.daily.data[0].sunriseTime),
-            sunset: data.daily.data[0].sunsetTime,
+            sunrise: this.convertEpoch(data.daily.data[0].sunriseTime * 1000),
+            sunset: this.convertEpoch(data.daily.data[0].sunsetTime * 1000),
+            timezone: data.timezone,
             uvIndex: data.currently.uvIndex,
             visibility: Math.round(data.currently.visibility),
             wind: {
