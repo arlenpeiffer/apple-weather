@@ -82,6 +82,13 @@ class LocationContainer extends React.Component {
     }
   }
 
+  convertEpoch(timestamp) {
+    const date = new Date(timestamp * 1000);
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    return date.toTimeString();
+  }
+
   componentDidMount() {
     const proxy = "https://cors-anywhere.herokuapp.com/";
     const api =
@@ -104,7 +111,7 @@ class LocationContainer extends React.Component {
             precipitation: data.currently.precipIntensity,
             precipitationChance: data.currently.precipProbability,
             pressure: this.convertPressure(data.currently.pressure),
-            sunrise: data.daily.data[0].sunriseTime,
+            sunrise: this.convertEpoch(data.daily.data[0].sunriseTime),
             sunset: data.daily.data[0].sunsetTime,
             uvIndex: data.currently.uvIndex,
             visibility: Math.round(data.currently.visibility),
