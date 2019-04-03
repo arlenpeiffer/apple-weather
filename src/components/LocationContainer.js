@@ -83,10 +83,10 @@ class LocationContainer extends React.Component {
     }
   }
 
-  convertEpoch(timestamp) {
+  convertUnix(timestamp, format) {
     const timezone = this.props.timezone;
     const date = moment(timestamp).tz(timezone);
-    return date.format("h:mA");
+    return date.format(format);
   }
 
   componentDidMount() {
@@ -111,8 +111,14 @@ class LocationContainer extends React.Component {
             precipitation: data.currently.precipIntensity,
             precipitationChance: data.currently.precipProbability,
             pressure: this.convertPressure(data.currently.pressure),
-            sunrise: this.convertEpoch(data.daily.data[0].sunriseTime * 1000),
-            sunset: this.convertEpoch(data.daily.data[0].sunsetTime * 1000),
+            sunrise: this.convertUnix(
+              data.daily.data[0].sunriseTime * 1000,
+              "h:m A"
+            ),
+            sunset: this.convertUnix(
+              data.daily.data[0].sunsetTime * 1000,
+              "h:m A"
+            ),
             timezone: data.timezone,
             uvIndex: data.currently.uvIndex,
             visibility: Math.round(data.currently.visibility),
