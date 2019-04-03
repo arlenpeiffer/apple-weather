@@ -12,14 +12,12 @@ class App extends React.Component {
         {
           name: "South Pasadena, CA",
           geocode: "34.108981,-118.156508",
-          // timezone: "America/Los_Angeles"
-          utcOffset: -7
+          timezone: "America/Los_Angeles"
         },
         {
           name: "Washington, IA",
           geocode: "41.299371,-91.711634",
-          // timezone: "America/Chicago"
-          utcOffset: -5
+          timezone: "America/Chicago"
         }
       ],
       locationsZip: ["91030"]
@@ -77,8 +75,7 @@ class App extends React.Component {
             locations: locations.concat({
               name: data.city + ", " + data.state,
               geocode: data.lat + "," + data.lng,
-              // timezone: data.timezone.timezone_identifier
-              utcOffset: data.timezone.utc_offset_sec / 60 / 60
+              timezone: data.timezone.timezone_identifier
             })
           })
         )

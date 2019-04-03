@@ -7,12 +7,11 @@ function Locations(props) {
       Locations:
       {props.locations.map((location, index) => (
         <LocationContainer
+          geocode={location.geocode}
           index={index}
           key={index}
           name={location.name}
-          geocode={location.geocode}
-          // timezone={location.timezone}
-          utcOffset={location.utcOffset}
+          timezone={location.timezone}
         />
       ))}
     </div>

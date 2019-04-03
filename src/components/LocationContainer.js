@@ -1,5 +1,6 @@
 import React from "react";
 import Location from "./Location";
+import moment from "moment-timezone";
 
 class LocationContainer extends React.Component {
   constructor(props) {
@@ -82,23 +83,10 @@ class LocationContainer extends React.Component {
     }
   }
 
-  // convertEpoch(timestamp) {
-  //   const timezone = this.props.timezone;
-  //   const options = {
-  //     timezone: timezone,
-  //     hour12: true,
-  //     timeZoneName: "long"
-  //   };
-  //   const date = new Date(timestamp);
-  //   return date.toLocaleString("en-US", options);
-  // }
-
   convertEpoch(timestamp) {
-    const offset = this.props.utcOffset;
-    const d = new Date(timestamp);
-    const utc = d.getTime() + d.getTimezoneOffset() * 60000;
-    const nd = new Date(utc + 3600000 * offset);
-    return nd.toLocaleString();
+    const timezone = this.props.timezone;
+    const date = moment(timestamp).tz(timezone);
+    return date.format("h:mA");
   }
 
   componentDidMount() {
