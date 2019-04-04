@@ -1,16 +1,22 @@
 import React from "react";
 import Day from "./Day";
 import Parameter from "./Parameter";
+import Today from "./Today";
 
 function Location(props) {
+  let today = props.data.week.slice(0, 1);
+  today = today[0];
+  const week = props.data.week.slice(1);
+
   return (
     <div>
       <h1>{props.name}</h1>
       <p>{props.data.description}</p>
       <p>{props.data.currentTemp}°</p>
+      <Today day={today} />
       <div>Hourly goes here</div>
       <div>
-        {props.data.week.map(day => (
+        {week.map(day => (
           <Day key={day.index} day={day} />
         ))}
       </div>
