@@ -1,4 +1,5 @@
 import React from "react";
+import Day from "./Day";
 import Parameter from "./Parameter";
 
 function Location(props) {
@@ -8,7 +9,11 @@ function Location(props) {
       <p>{props.data.description}</p>
       <p>{props.data.currentTemp}°</p>
       <div>Hourly goes here</div>
-      <div>Daily forecast goes here</div>
+      <div>
+        {props.data.week.map(day => (
+          <Day key={day.index} day={day} />
+        ))}
+      </div>
       <p>Detailed description goes here</p>
       <Parameter title="SUNRISE" measurement={props.data.sunrise} />
       <Parameter title="SUNSET" measurement={props.data.sunset} />

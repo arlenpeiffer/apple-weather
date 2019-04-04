@@ -122,6 +122,13 @@ class LocationContainer extends React.Component {
             timezone: data.timezone,
             uvIndex: data.currently.uvIndex,
             visibility: Math.round(data.currently.visibility),
+            week: data.daily.data.map((day, index) => ({
+              icon: day.icon,
+              index: index,
+              high: day.temperatureHigh,
+              low: day.temperatureLow,
+              weekday: this.convertUnix(day.time * 1000, "dddd")
+            })),
             wind: {
               direction: this.convertWindBearing(data.currently.windBearing),
               speed: Math.round(data.currently.windSpeed)
