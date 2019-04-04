@@ -103,36 +103,44 @@ class LocationContainer extends React.Component {
       .then(data =>
         this.setState({
           data: {
-            currentTemp: Math.round(data.currently.temperature),
-            description: data.currently.summary,
-            feelsLike: Math.round(data.currently.apparentTemperature),
-            humidity: Math.round(data.currently.humidity * 100),
-            icon: data.currently.icon,
-            precipitation: data.currently.precipIntensity,
-            precipitationChance: data.currently.precipProbability,
-            pressure: this.convertPressure(data.currently.pressure),
-            sunrise: this.convertUnix(
-              data.daily.data[0].sunriseTime * 1000,
-              "h:m A"
-            ),
-            sunset: this.convertUnix(
-              data.daily.data[0].sunsetTime * 1000,
-              "h:m A"
-            ),
-            timezone: data.timezone,
-            uvIndex: data.currently.uvIndex,
-            visibility: Math.round(data.currently.visibility),
+            current: {
+              currentTemp: Math.round(data.currently.temperature),
+              description: data.currently.summary,
+              feelsLike: Math.round(data.currently.apparentTemperature),
+              humidity: Math.round(data.currently.humidity * 100),
+              icon: data.currently.icon,
+              precipitation: data.currently.precipIntensity,
+              precipitationChance: data.currently.precipProbability,
+              pressure: this.convertPressure(data.currently.pressure),
+              sunrise: this.convertUnix(
+                data.daily.data[0].sunriseTime * 1000,
+                "h:m A"
+              ),
+              sunset: this.convertUnix(
+                data.daily.data[0].sunsetTime * 1000,
+                "h:m A"
+              ),
+              timezone: data.timezone,
+              uvIndex: data.currently.uvIndex,
+              visibility: Math.round(data.currently.visibility),
+              wind: {
+                direction: this.convertWindBearing(data.currently.windBearing),
+                speed: Math.round(data.currently.windSpeed)
+              }
+            },
+            hour: data.hourly.data.map((hour, index) => ({
+              icon: hour.icon,
+              index: index,
+              temp: Math.round(hour.temperature),
+              time: this.convertUnix(hour.time * 1000, "hA")
+            })),
             week: data.daily.data.map((day, index) => ({
               icon: day.icon,
               index: index,
               high: day.temperatureHigh,
               low: day.temperatureLow,
               weekday: this.convertUnix(day.time * 1000, "dddd")
-            })),
-            wind: {
-              direction: this.convertWindBearing(data.currently.windBearing),
-              speed: Math.round(data.currently.windSpeed)
-            }
+            }))
           },
           error: null,
           loading: false
