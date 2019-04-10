@@ -4,7 +4,6 @@ import Now from "./Now";
 import "./Hours.css";
 
 function Hours(props) {
-  let hours24 = props.hours.slice(1, 24);
   let now = props.hours.slice(0, 1);
 
   return (
@@ -12,7 +11,7 @@ function Hours(props) {
       {now.map(hour => (
         <Now key={hour.index} hour={hour} />
       ))}
-      {hours24.map(hour => (
+      {props.hours.map(hour => (
         <Hour key={hour.index} hour={hour} />
       ))}
     </div>

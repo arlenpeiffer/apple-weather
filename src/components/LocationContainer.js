@@ -128,7 +128,7 @@ class LocationContainer extends React.Component {
                 speed: Math.round(data.currently.windSpeed)
               }
             },
-            hour: data.hourly.data.map((hour, index) => ({
+            hour: data.hourly.data.slice(0, 24).map((hour, index) => ({
               icon: hour.icon,
               index: index,
               temp: Math.round(hour.temperature),
