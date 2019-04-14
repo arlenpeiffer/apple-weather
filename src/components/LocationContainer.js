@@ -89,6 +89,41 @@ class LocationContainer extends React.Component {
     return date.format(format);
   }
 
+  // CHECKS IF TIME IS AM/PM
+  // ADDS 12 TO HOUR IF PM
+  // RETURNS HOUR AS A NUMBER
+  checkPM(time) {
+    if (time.includes("PM")) {
+      if (time.includes("12")) {
+        time = "0 PM";
+      }
+      time = parseInt(time) + 12;
+    } else {
+      time = parseInt(time);
+    }
+    return time;
+  }
+
+  // TAKES THE HOURLY FORECAST ARRAY AND A SUNRISE OR SUNSET TIME
+  // CONVERTS THOSE TIMES TO AN HOUR (IN 24 HOUR) AND COMPARES TO GET THE INDEX OF SUNRISE/SUNSET
+  // USES THAT INDEX TO INSERT A NEW ITEM IN THE ARRAY
+  findInsertPoint(array, time) {
+    let insertPoint = array.find(
+      hour => this.checkPM(hour.time) > this.checkPM(time)
+    );
+    insertPoint = insertPoint.index;
+    console.log(insertPoint);
+
+    const { data } = this.state;
+    data.hour.splice(insertPoint, 0, { time: time });
+    console.log(data.hour);
+  }
+
+  componentDidUpdate() {
+    const { data } = this.state;
+    if (data) this.findInsertPoint(data.hour, data.current.sunset);
+  }
+
   componentDidMount() {
     const proxy = "https://cors-anywhere.herokuapp.com/";
     const api =
@@ -116,8 +151,16 @@ class LocationContainer extends React.Component {
                 data.daily.data[0].sunriseTime * 1000,
                 "h:m A"
               ),
+              sunriseTomorrow: this.convertUnix(
+                data.daily.data[1].sunriseTime * 1000,
+                "h:m A"
+              ),
               sunset: this.convertUnix(
                 data.daily.data[0].sunsetTime * 1000,
+                "h:m A"
+              ),
+              sunsetTomorrow: this.convertUnix(
+                data.daily.data[1].sunsetTime * 1000,
                 "h:m A"
               ),
               timezone: data.timezone,
