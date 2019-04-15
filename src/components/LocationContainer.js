@@ -107,39 +107,83 @@ class LocationContainer extends React.Component {
   // TAKES THE HOURLY FORECAST ARRAY AND A SUNRISE OR SUNSET TIME
   // CONVERTS THOSE TIMES TO AN HOUR (IN 24 HOUR) AND COMPARES TO GET THE INDEX OF SUNRISE/SUNSET
   // USES THAT INDEX TO INSERT A NEW ITEM IN THE ARRAY
-  findInsertPoint(array, sunArray, currentTime) {
-    let time;
-    if (currentTime > sunArray[0]) {
-      time = sunArray[1];
-    } else {
-      time = sunArray[0];
-    }
+  // findInsertPoint(array, sunArray, currentTime) {
+  //   let time;
+  //   if (currentTime > sunArray[0]) {
+  //     time = sunArray[1];
+  //   } else {
+  //     time = sunArray[0];
+  //   }
 
-    let insertPoint = array.find(hour => hour.unix > time);
-    insertPoint = insertPoint.index;
-    console.log(insertPoint);
+  //   let insertPoint = array.find(hour => hour.unix > time);
+  //   insertPoint = insertPoint.index;
+  //   console.log(insertPoint);
 
-    const { data } = this.state;
-    data.hour.splice(insertPoint, 0, {
+  //   const { data } = this.state;
+  //   data.hour.splice(insertPoint, 0, {
+  //     time: this.convertUnix(time * 1000, "h:m A")
+  //   });
+  //   console.log(data.hour);
+  // }
+
+  findInsertPoint(array, time, direction) {
+    let insertPoint = array.findIndex(hour => hour.time > time);
+    console.log("insert @", insertPoint);
+
+    array.splice(insertPoint, 0, {
+      icon: direction,
       time: this.convertUnix(time * 1000, "h:m A")
     });
-    console.log(data.hour);
+    console.log(array.slice(0, 24));
   }
 
-  componentDidUpdate() {
-    const { data } = this.state;
-    if (data)
-      this.findInsertPoint(
-        data.hour,
-        data.current.sunriseUnix,
-        data.current.currentTime
-      );
-    if (data)
-      this.findInsertPoint(
-        data.hour,
-        data.current.sunsetUnix,
-        data.current.currentTime
-      );
+  create24HourForecast(hourlyArray, sunriseArray, sunsetArray, currentTime) {
+    const sunriseToday = sunriseArray[0].sunriseTime;
+    const sunriseTomorrow = sunriseArray[1].sunriseTime;
+    const sunsetToday = sunsetArray[0].sunsetTime;
+    const sunsetTomorrow = sunsetArray[1].sunsetTime;
+    let sunrise;
+    let sunset;
+
+    if (currentTime > sunriseToday) {
+      sunrise = sunriseTomorrow;
+    } else {
+      sunrise = sunriseToday;
+    }
+
+    if (currentTime > sunsetToday) {
+      sunset = sunsetTomorrow;
+    } else {
+      sunset = sunsetToday;
+    }
+
+    // ADD SUNRISE
+    let insertPoint = hourlyArray.findIndex(hour => hour.time > sunrise);
+    hourlyArray.splice(insertPoint, 0, {
+      icon: "sunrise",
+      time: sunrise
+    });
+    // ADD SUNSET
+    insertPoint = hourlyArray.findIndex(hour => hour.time > sunset);
+    hourlyArray.splice(insertPoint, 0, {
+      icon: "sunset",
+      time: sunset
+    });
+
+    return hourlyArray.slice(0, 26).map((hour, index) => ({
+      icon: hour.icon,
+      index: index,
+      temp: Math.round(hour.temperature),
+      time: this.convertUnix(hour.time * 1000, "hA")
+    }));
+
+    // array.splice(insertPoint, 0, {
+    //   icon: direction,
+    //   time: this.convertUnix(time * 1000, "h:m A")
+    // });
+
+    // this.findInsertPoint(hourlyArray, sunrise, "sunrise");
+    // this.findInsertPoint(hourlyArray, sunset, "sunset");
   }
 
   componentDidMount() {
@@ -158,7 +202,7 @@ class LocationContainer extends React.Component {
           data: {
             current: {
               currentTemp: Math.round(data.currently.temperature),
-              currentTime: data.currently.time,
+              // currentTime: data.currently.time,
               description: data.currently.summary,
               feelsLike: Math.round(data.currently.apparentTemperature),
               humidity: Math.round(data.currently.humidity * 100),
@@ -170,10 +214,10 @@ class LocationContainer extends React.Component {
                 data.daily.data[0].sunriseTime * 1000,
                 "h:m A"
               ),
-              sunriseUnix: [
-                data.daily.data[0].sunriseTime,
-                data.daily.data[1].sunriseTime
-              ],
+              // sunriseUnix: [
+              //   data.daily.data[0].sunriseTime,
+              //   data.daily.data[1].sunriseTime
+              // ],
               // sunriseTomorrow: this.convertUnix(
               //   data.daily.data[1].sunriseTime * 1000,
               //   "h:m A"
@@ -182,10 +226,10 @@ class LocationContainer extends React.Component {
                 data.daily.data[0].sunsetTime * 1000,
                 "h:m A"
               ),
-              sunsetUnix: [
-                data.daily.data[0].sunsetTime,
-                data.daily.data[1].sunsetTime
-              ],
+              // sunsetUnix: [
+              //   data.daily.data[0].sunsetTime,
+              //   data.daily.data[1].sunsetTime
+              // ],
               // sunsetTomorrow: this.convertUnix(
               //   data.daily.data[1].sunsetTime * 1000,
               //   "h:m A"
@@ -198,13 +242,19 @@ class LocationContainer extends React.Component {
                 speed: Math.round(data.currently.windSpeed)
               }
             },
-            hour: data.hourly.data.slice(0, 24).map((hour, index) => ({
-              icon: hour.icon,
-              index: index,
-              temp: Math.round(hour.temperature),
-              time: this.convertUnix(hour.time * 1000, "hA"),
-              unix: hour.time
-            })),
+            hour: this.create24HourForecast(
+              data.hourly.data,
+              data.daily.data.slice(0, 2),
+              data.daily.data.slice(0, 2),
+              data.currently.time
+            ),
+            // hour: data.hourly.data.slice(0, 24).map((hour, index) => ({
+            //   icon: hour.icon,
+            //   index: index,
+            //   temp: Math.round(hour.temperature),
+            //   time: this.convertUnix(hour.time * 1000, "hA"),
+            //   unix: hour.time
+            // })),
             week: data.daily.data.map((day, index) => ({
               icon: day.icon,
               index: index,
