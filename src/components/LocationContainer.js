@@ -6,22 +6,6 @@ class LocationContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // data: {
-      //   currentTemp: null,
-      //   description: null,
-      //   feelsLike: null,
-      //   humidity: null,
-      //   icon: null,
-      //   precipitation: null,
-      //   precipitationChance: null,
-      //   pressure: null,
-      //   uvIndex: null,
-      //   visibility: null,
-      //   wind: {
-      //     direction: null,
-      //     speed: null
-      //   }
-      // },
       error: null,
       loading: true
     };
@@ -124,7 +108,14 @@ class LocationContainer extends React.Component {
     });
 
     return hourlyArray.slice(0, 26).map((hour, index) => {
-      if (hour.icon === "sunrise") {
+      if (index === 0) {
+        return {
+          icon: hour.icon,
+          index: index,
+          temp: Math.round(hour.temperature) + "°",
+          time: "Now"
+        };
+      } else if (hour.icon === "sunrise") {
         return {
           icon: hour.icon,
           index: index,
@@ -146,10 +137,6 @@ class LocationContainer extends React.Component {
         time: this.convertUnix(hour.time * 1000, "hA")
       };
     });
-  }
-
-  componentDidUpdate() {
-    console.log(this.state);
   }
 
   componentDidMount() {
