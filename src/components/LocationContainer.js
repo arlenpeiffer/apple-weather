@@ -123,12 +123,33 @@ class LocationContainer extends React.Component {
       time: sunset
     });
 
-    return hourlyArray.slice(0, 26).map((hour, index) => ({
-      icon: hour.icon,
-      index: index,
-      temp: Math.round(hour.temperature),
-      time: this.convertUnix(hour.time * 1000, "hA")
-    }));
+    return hourlyArray.slice(0, 26).map((hour, index) => {
+      if (hour.icon === "sunrise") {
+        return {
+          icon: hour.icon,
+          index: index,
+          temp: "Sunrise",
+          time: this.convertUnix(hour.time * 1000, "h:mmA")
+        };
+      } else if (hour.icon === "sunset") {
+        return {
+          icon: hour.icon,
+          index: index,
+          temp: "Sunset",
+          time: this.convertUnix(hour.time * 1000, "h:mmA")
+        };
+      }
+      return {
+        icon: hour.icon,
+        index: index,
+        temp: Math.round(hour.temperature) + "°",
+        time: this.convertUnix(hour.time * 1000, "hA")
+      };
+    });
+  }
+
+  componentDidUpdate() {
+    console.log(this.state);
   }
 
   componentDidMount() {
@@ -147,7 +168,6 @@ class LocationContainer extends React.Component {
           data: {
             current: {
               currentTemp: Math.round(data.currently.temperature),
-              // currentTime: data.currently.time,
               description: data.currently.summary,
               feelsLike: Math.round(data.currently.apparentTemperature),
               humidity: Math.round(data.currently.humidity * 100),
@@ -157,11 +177,11 @@ class LocationContainer extends React.Component {
               pressure: this.convertPressure(data.currently.pressure),
               sunrise: this.convertUnix(
                 data.daily.data[0].sunriseTime * 1000,
-                "h:m A"
+                "h:mm A"
               ),
               sunset: this.convertUnix(
                 data.daily.data[0].sunsetTime * 1000,
-                "h:m A"
+                "h:mm A"
               ),
               timezone: data.timezone,
               uvIndex: data.currently.uvIndex,
