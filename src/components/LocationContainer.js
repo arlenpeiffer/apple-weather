@@ -108,6 +108,7 @@ class LocationContainer extends React.Component {
     });
 
     return hourlyArray.slice(0, 26).map((hour, index) => {
+      // NOW
       if (index === 0) {
         return {
           icon: hour.icon,
@@ -115,6 +116,7 @@ class LocationContainer extends React.Component {
           temp: Math.round(hour.temperature) + "°",
           time: "Now"
         };
+        // SUNRISE
       } else if (hour.icon === "sunrise") {
         return {
           icon: hour.icon,
@@ -122,6 +124,7 @@ class LocationContainer extends React.Component {
           temp: "Sunrise",
           time: this.convertUnix(hour.time * 1000, "h:mmA")
         };
+        // SUNSET
       } else if (hour.icon === "sunset") {
         return {
           icon: hour.icon,
@@ -130,6 +133,7 @@ class LocationContainer extends React.Component {
           time: this.convertUnix(hour.time * 1000, "h:mmA")
         };
       }
+      // DEFAULT
       return {
         icon: hour.icon,
         index: index,
