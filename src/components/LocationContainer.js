@@ -107,21 +107,39 @@ class LocationContainer extends React.Component {
   // TAKES THE HOURLY FORECAST ARRAY AND A SUNRISE OR SUNSET TIME
   // CONVERTS THOSE TIMES TO AN HOUR (IN 24 HOUR) AND COMPARES TO GET THE INDEX OF SUNRISE/SUNSET
   // USES THAT INDEX TO INSERT A NEW ITEM IN THE ARRAY
-  findInsertPoint(array, time) {
-    let insertPoint = array.find(
-      hour => this.checkPM(hour.time) > this.checkPM(time)
-    );
+  findInsertPoint(array, sunArray, currentTime) {
+    let time;
+    if (currentTime > sunArray[0]) {
+      time = sunArray[1];
+    } else {
+      time = sunArray[0];
+    }
+
+    let insertPoint = array.find(hour => hour.unix > time);
     insertPoint = insertPoint.index;
     console.log(insertPoint);
 
     const { data } = this.state;
-    data.hour.splice(insertPoint, 0, { time: time });
+    data.hour.splice(insertPoint, 0, {
+      time: this.convertUnix(time * 1000, "h:m A")
+    });
     console.log(data.hour);
   }
 
   componentDidUpdate() {
     const { data } = this.state;
-    if (data) this.findInsertPoint(data.hour, data.current.sunset);
+    if (data)
+      this.findInsertPoint(
+        data.hour,
+        data.current.sunriseUnix,
+        data.current.currentTime
+      );
+    if (data)
+      this.findInsertPoint(
+        data.hour,
+        data.current.sunsetUnix,
+        data.current.currentTime
+      );
   }
 
   componentDidMount() {
@@ -140,6 +158,7 @@ class LocationContainer extends React.Component {
           data: {
             current: {
               currentTemp: Math.round(data.currently.temperature),
+              currentTime: data.currently.time,
               description: data.currently.summary,
               feelsLike: Math.round(data.currently.apparentTemperature),
               humidity: Math.round(data.currently.humidity * 100),
@@ -151,18 +170,26 @@ class LocationContainer extends React.Component {
                 data.daily.data[0].sunriseTime * 1000,
                 "h:m A"
               ),
-              sunriseTomorrow: this.convertUnix(
-                data.daily.data[1].sunriseTime * 1000,
-                "h:m A"
-              ),
+              sunriseUnix: [
+                data.daily.data[0].sunriseTime,
+                data.daily.data[1].sunriseTime
+              ],
+              // sunriseTomorrow: this.convertUnix(
+              //   data.daily.data[1].sunriseTime * 1000,
+              //   "h:m A"
+              // ),
               sunset: this.convertUnix(
                 data.daily.data[0].sunsetTime * 1000,
                 "h:m A"
               ),
-              sunsetTomorrow: this.convertUnix(
-                data.daily.data[1].sunsetTime * 1000,
-                "h:m A"
-              ),
+              sunsetUnix: [
+                data.daily.data[0].sunsetTime,
+                data.daily.data[1].sunsetTime
+              ],
+              // sunsetTomorrow: this.convertUnix(
+              //   data.daily.data[1].sunsetTime * 1000,
+              //   "h:m A"
+              // ),
               timezone: data.timezone,
               uvIndex: data.currently.uvIndex,
               visibility: Math.round(data.currently.visibility),
@@ -175,7 +202,8 @@ class LocationContainer extends React.Component {
               icon: hour.icon,
               index: index,
               temp: Math.round(hour.temperature),
-              time: this.convertUnix(hour.time * 1000, "hA")
+              time: this.convertUnix(hour.time * 1000, "hA"),
+              unix: hour.time
             })),
             week: data.daily.data.map((day, index) => ({
               icon: day.icon,
