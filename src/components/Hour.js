@@ -6,7 +6,7 @@ function Hour(props) {
     <div className="hour">
       <p>{props.hour.time}</p>
       <p>{props.hour.icon}</p>
-      <p>{props.hour.temp}</p>
+      <p>{props.hour.temp || props.hour.description}</p>
     </div>
   );
 }

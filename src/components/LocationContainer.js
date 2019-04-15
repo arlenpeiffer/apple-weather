@@ -121,7 +121,7 @@ class LocationContainer extends React.Component {
         return {
           icon: hour.icon,
           index: index,
-          temp: "Sunrise",
+          description: "Sunrise",
           time: this.convertUnix(hour.time * 1000, "h:mmA")
         };
         // SUNSET
@@ -129,7 +129,7 @@ class LocationContainer extends React.Component {
         return {
           icon: hour.icon,
           index: index,
-          temp: "Sunset",
+          description: "Sunset",
           time: this.convertUnix(hour.time * 1000, "h:mmA")
         };
       }
@@ -141,6 +141,10 @@ class LocationContainer extends React.Component {
         time: this.convertUnix(hour.time * 1000, "hA")
       };
     });
+  }
+
+  componentDidUpdate() {
+    console.log(this.state);
   }
 
   componentDidMount() {

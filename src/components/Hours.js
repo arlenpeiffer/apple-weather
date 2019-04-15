@@ -1,6 +1,5 @@
 import React from "react";
 import Hour from "./Hour";
-import Now from "./Now";
 import "./Hours.css";
 
 function Hours(props) {
