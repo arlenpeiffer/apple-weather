@@ -89,54 +89,6 @@ class LocationContainer extends React.Component {
     return date.format(format);
   }
 
-  // CHECKS IF TIME IS AM/PM
-  // ADDS 12 TO HOUR IF PM
-  // RETURNS HOUR AS A NUMBER
-  checkPM(time) {
-    if (time.includes("PM")) {
-      if (time.includes("12")) {
-        time = "0 PM";
-      }
-      time = parseInt(time) + 12;
-    } else {
-      time = parseInt(time);
-    }
-    return time;
-  }
-
-  // TAKES THE HOURLY FORECAST ARRAY AND A SUNRISE OR SUNSET TIME
-  // CONVERTS THOSE TIMES TO AN HOUR (IN 24 HOUR) AND COMPARES TO GET THE INDEX OF SUNRISE/SUNSET
-  // USES THAT INDEX TO INSERT A NEW ITEM IN THE ARRAY
-  // findInsertPoint(array, sunArray, currentTime) {
-  //   let time;
-  //   if (currentTime > sunArray[0]) {
-  //     time = sunArray[1];
-  //   } else {
-  //     time = sunArray[0];
-  //   }
-
-  //   let insertPoint = array.find(hour => hour.unix > time);
-  //   insertPoint = insertPoint.index;
-  //   console.log(insertPoint);
-
-  //   const { data } = this.state;
-  //   data.hour.splice(insertPoint, 0, {
-  //     time: this.convertUnix(time * 1000, "h:m A")
-  //   });
-  //   console.log(data.hour);
-  // }
-
-  findInsertPoint(array, time, direction) {
-    let insertPoint = array.findIndex(hour => hour.time > time);
-    console.log("insert @", insertPoint);
-
-    array.splice(insertPoint, 0, {
-      icon: direction,
-      time: this.convertUnix(time * 1000, "h:m A")
-    });
-    console.log(array.slice(0, 24));
-  }
-
   create24HourForecast(hourlyArray, sunriseArray, sunsetArray, currentTime) {
     const sunriseToday = sunriseArray[0].sunriseTime;
     const sunriseTomorrow = sunriseArray[1].sunriseTime;
@@ -163,6 +115,7 @@ class LocationContainer extends React.Component {
       icon: "sunrise",
       time: sunrise
     });
+
     // ADD SUNSET
     insertPoint = hourlyArray.findIndex(hour => hour.time > sunset);
     hourlyArray.splice(insertPoint, 0, {
@@ -176,14 +129,6 @@ class LocationContainer extends React.Component {
       temp: Math.round(hour.temperature),
       time: this.convertUnix(hour.time * 1000, "hA")
     }));
-
-    // array.splice(insertPoint, 0, {
-    //   icon: direction,
-    //   time: this.convertUnix(time * 1000, "h:m A")
-    // });
-
-    // this.findInsertPoint(hourlyArray, sunrise, "sunrise");
-    // this.findInsertPoint(hourlyArray, sunset, "sunset");
   }
 
   componentDidMount() {
@@ -214,26 +159,10 @@ class LocationContainer extends React.Component {
                 data.daily.data[0].sunriseTime * 1000,
                 "h:m A"
               ),
-              // sunriseUnix: [
-              //   data.daily.data[0].sunriseTime,
-              //   data.daily.data[1].sunriseTime
-              // ],
-              // sunriseTomorrow: this.convertUnix(
-              //   data.daily.data[1].sunriseTime * 1000,
-              //   "h:m A"
-              // ),
               sunset: this.convertUnix(
                 data.daily.data[0].sunsetTime * 1000,
                 "h:m A"
               ),
-              // sunsetUnix: [
-              //   data.daily.data[0].sunsetTime,
-              //   data.daily.data[1].sunsetTime
-              // ],
-              // sunsetTomorrow: this.convertUnix(
-              //   data.daily.data[1].sunsetTime * 1000,
-              //   "h:m A"
-              // ),
               timezone: data.timezone,
               uvIndex: data.currently.uvIndex,
               visibility: Math.round(data.currently.visibility),
@@ -248,13 +177,6 @@ class LocationContainer extends React.Component {
               data.daily.data.slice(0, 2),
               data.currently.time
             ),
-            // hour: data.hourly.data.slice(0, 24).map((hour, index) => ({
-            //   icon: hour.icon,
-            //   index: index,
-            //   temp: Math.round(hour.temperature),
-            //   time: this.convertUnix(hour.time * 1000, "hA"),
-            //   unix: hour.time
-            // })),
             week: data.daily.data.map((day, index) => ({
               icon: day.icon,
               index: index,
