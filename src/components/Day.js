@@ -1,13 +1,18 @@
 import React from "react";
+
 import "./Day.css";
+import "../weather-icons/css/weather-icons.css";
 
 function Day(props) {
+  const { high, icon, low, weekday } = props.day;
+  const darkSkyPrefix = "wi wi-forecast-io-";
+
   return (
     <div className="row">
-      <p>{props.day.weekday}</p>
-      <p>{props.day.icon}</p>
-      <p>High: {Math.round(props.day.high) + "°"}</p>
-      <p>Low: {Math.round(props.day.low) + "°"}</p>
+      <p>{weekday}</p>
+      <i className={darkSkyPrefix + icon} />
+      <p>High: {Math.round(high) + "°"}</p>
+      <p>Low: {Math.round(low) + "°"}</p>
     </div>
   );
 }

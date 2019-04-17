@@ -1,12 +1,17 @@
 import React from "react";
+
 import "./Hour.css";
+import "../weather-icons/css/weather-icons.css";
 
 function Hour(props) {
+  const { description, icon, temp, time } = props.hour;
+  const darkSkyPrefix = "wi wi-forecast-io-";
+
   return (
     <div className="hour">
-      <p>{props.hour.time}</p>
-      <p>{props.hour.icon}</p>
-      <p>{props.hour.temp || props.hour.description}</p>
+      <p>{time}</p>
+      <i className={darkSkyPrefix + icon} />
+      <p>{temp || description}</p>
     </div>
   );
 }
