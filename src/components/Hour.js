@@ -5,12 +5,15 @@ import "../weather-icons/css/weather-icons.css";
 
 function Hour(props) {
   const { description, icon, temp, time } = props.hour;
-  const darkSkyPrefix = "wi wi-forecast-io-";
 
   return (
     <div className="hour">
       <p>{time}</p>
-      <i className={darkSkyPrefix + icon} />
+      {description ? (
+        <i className={"wi wi-" + icon} />
+      ) : (
+        <i className={"wi wi-forecast-io-" + icon} />
+      )}
       <p>{temp || description}</p>
     </div>
   );
