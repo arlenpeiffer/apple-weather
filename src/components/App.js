@@ -9,18 +9,18 @@ class App extends React.Component {
     this.state = {
       error: null,
       locations: [
-        {
-          name: "South Pasadena, CA",
-          geocode: "34.108981,-118.156508",
-          timezone: "America/Los_Angeles"
-        },
-        {
-          name: "Washington, IA",
-          geocode: "41.299371,-91.711634",
-          timezone: "America/Chicago"
-        }
+        // {
+        //   name: "South Pasadena, CA",
+        //   geocode: "34.108981,-118.156508",
+        //   timezone: "America/Los_Angeles"
+        // },
+        // {
+        //   name: "Washington, IA",
+        //   geocode: "41.299371,-91.711634",
+        //   timezone: "America/Chicago"
+        // }
       ],
-      locationsZip: ["91030"]
+      locationsZip: []
     };
   }
 
@@ -55,7 +55,10 @@ class App extends React.Component {
 
   addLocation(input) {
     const { locationsZip } = this.state;
-    this.setState({ error: null, locationsZip: locationsZip.concat(input) });
+    this.setState(
+      { error: null, locationsZip: locationsZip.concat(input) },
+      this.fetchGeocode
+    );
   }
 
   fetchGeocode() {
@@ -66,19 +69,23 @@ class App extends React.Component {
     const apiUnits = "/degrees";
 
     const { locations, locationsZip } = this.state;
-    // this.setState({ error: null });
     locationsZip.map(location =>
       fetch(apiURL + apiKey + apiFormat + location + apiUnits)
         .then(response => response.json())
-        .then(data =>
+        .then(data => {
+          if (data.ok) {
+            this.setState({
+              locations: locations.concat({
+                name: data.city + ", " + data.state,
+                geocode: data.lat + "," + data.lng,
+                timezone: data.timezone.timezone_identifier
+              })
+            });
+          }
           this.setState({
-            locations: locations.concat({
-              name: data.city + ", " + data.state,
-              geocode: data.lat + "," + data.lng,
-              timezone: data.timezone.timezone_identifier
-            })
-          })
-        )
+            error: "network error"
+          });
+        })
     );
   }
 
