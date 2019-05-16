@@ -1,6 +1,7 @@
 import React from "react";
 import Input from "./Input";
-import LocationContainer from "./LocationContainer";
+import Locations from "./Locations";
+import SelectedLocationContainer from "./SelectedLocationContainer";
 
 class App extends React.Component {
   constructor(props) {
@@ -8,7 +9,7 @@ class App extends React.Component {
     this.validateInput = this.validateInput.bind(this);
     this.state = {
       error: null,
-      location: null
+      locations: []
     };
   }
 
@@ -55,6 +56,7 @@ class App extends React.Component {
             error: "No data for this zip code"
           });
         }
+        const { locations } = this.state;
         const city = data.results[0].address_components.city;
         const state = data.results[0].address_components.state;
         const latitude = data.results[0].location.lat;
@@ -62,27 +64,29 @@ class App extends React.Component {
         const timezone = data.results[0].fields.timezone.name;
         this.setState({
           error: null,
-          location: {
+          locations: locations.concat({
             name: city + ", " + state,
             geocode: latitude + "," + longitude,
             timezone: timezone
-          }
+          })
         });
       })
       .catch(error => console.log(error));
   }
 
   render() {
-    const { error, location } = this.state;
+    const { error, locations } = this.state;
+    const last = locations[locations.length - 1];
     return (
       <div>
         <Input validateInput={this.validateInput} />
         {error && <p>{error}</p>}
-        {location && (
-          <LocationContainer
-            geocode={location.geocode}
-            name={location.name}
-            timezone={location.timezone}
+        <Locations locations={locations} />
+        {locations.length > 0 && (
+          <SelectedLocationContainer
+            geocode={last.geocode}
+            name={last.name}
+            timezone={last.timezone}
           />
         )}
       </div>

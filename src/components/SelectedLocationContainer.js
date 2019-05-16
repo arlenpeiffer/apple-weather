@@ -1,8 +1,8 @@
 import React from "react";
-import Location from "./Location";
+import SelectedLocation from "./SelectedLocation";
 import moment from "moment-timezone";
 
-class LocationContainer extends React.Component {
+class SelectedLocationContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -143,9 +143,9 @@ class LocationContainer extends React.Component {
     });
   }
 
-  componentDidUpdate() {
-    console.log(this.state);
-  }
+  // componentDidUpdate() {
+  //   console.log(this.state);
+  // }
 
   componentDidMount() {
     const proxy = "https://cors-anywhere.herokuapp.com/";
@@ -210,9 +210,9 @@ class LocationContainer extends React.Component {
     if (loading) {
       return <p>Loading..</p>;
     } else {
-      return <Location name={this.props.name} data={data} />;
+      return <SelectedLocation name={this.props.name} data={data} />;
     }
   }
 }
 
-export default LocationContainer;
+export default SelectedLocationContainer;

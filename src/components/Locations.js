@@ -1,12 +1,11 @@
 import React from "react";
-import LocationContainer from "./LocationContainer";
+import Location from "./Location";
 
 function Locations(props) {
   return (
     <div>
-      Locations:
       {props.locations.map((location, index) => (
-        <LocationContainer
+        <Location
           geocode={location.geocode}
           index={index}
           key={index}
