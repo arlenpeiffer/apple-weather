@@ -1,6 +1,6 @@
 import React from "react";
 import Input from "./Input";
-import Locations from "./Locations";
+import LocationContainer from "./LocationContainer";
 
 class App extends React.Component {
   constructor(props) {
@@ -8,8 +8,7 @@ class App extends React.Component {
     this.validateInput = this.validateInput.bind(this);
     this.state = {
       error: null,
-      locations: [],
-      locationsZip: []
+      location: null
     };
   }
 
@@ -35,97 +34,57 @@ class App extends React.Component {
     });
   }
   onValidationSuccess(input) {
-    const { locationsZip } = this.state;
-    if (locationsZip.includes(input)) {
-      return this.setState({ error: "That zip already exists" });
-    }
-    this.checkLocation(input);
+    this.fetchGeocode(input);
   }
 
-  checkLocation(input) {
-    const { locations } = this.state;
+  fetchGeocode(zip) {
     const apiURL =
       "https://api.geocod.io/v1.3/geocode/?api_key=1cd20544cdcccccd65fb524cddd00f16cd126cf&fields=timezone&q=";
-
-    fetch(apiURL + input)
+    fetch(apiURL + zip)
       .then(response => {
         if (response.ok) {
           return response.json();
         }
-        this.setState({ error: "network error" });
+        this.setState({
+          error: "network error"
+        });
       })
       .then(data => {
-        const city = data.results[0].address_components.city;
-        const state = data.results[0].address_components.state;
-        const latitude = data.results[0].location.lat;
-        const longitude = data.results[0].location.lng;
-        const timezone = data.results[0].fields.timezone.name;
-
         if (data.results.length === 0) {
           return this.setState({
             error: "No data for this zip code"
           });
         }
+        const city = data.results[0].address_components.city;
+        const state = data.results[0].address_components.state;
+        const latitude = data.results[0].location.lat;
+        const longitude = data.results[0].location.lng;
+        const timezone = data.results[0].fields.timezone.name;
         this.setState({
-          locations: locations.concat({
+          error: null,
+          location: {
             name: city + ", " + state,
             geocode: latitude + "," + longitude,
             timezone: timezone
-          })
-        });
-        this.addLocation(input);
-      });
-  }
-
-  addLocation(input) {
-    const { locationsZip } = this.state;
-    this.setState(
-      { error: null, locationsZip: locationsZip.concat(input) }
-      // this.fetchGeocode
-    );
-  }
-
-  fetchGeocode() {
-    const apiURL =
-      "https://api.geocod.io/v1.3/geocode/?api_key=1cd20544cdcccccd65fb524cddd00f16cd126cf&fields=timezone&q=";
-
-    const { locations, locationsZip } = this.state;
-    locationsZip.map(location =>
-      fetch(apiURL + location)
-        .then(response => {
-          if (response.ok) {
-            return response.json();
           }
-          this.setState({
-            error: "network error"
-          });
-        })
-
-        .then(data => {
-          const city = data.results[0].address_components.city;
-          const state = data.results[0].address_components.state;
-          const latitude = data.results[0].location.lat;
-          const longitude = data.results[0].location.lng;
-          const timezone = data.results[0].fields.timezone.name;
-          this.setState({
-            locations: locations.concat({
-              name: city + ", " + state,
-              geocode: latitude + "," + longitude,
-              timezone: timezone
-            })
-          });
-        })
-        .catch(error => console.log(error))
-    );
+        });
+      })
+      .catch(error => console.log(error));
   }
 
   render() {
-    const { error, locations } = this.state;
+    const { error, location } = this.state;
     return (
       <div>
         <Input validateInput={this.validateInput} />
         {error && <p>{error}</p>}
-        <Locations locations={locations} />
+        {location && (
+          <LocationContainer
+            geocode={location.geocode}
+            name={location.name}
+            timezone={location.timezone}
+          />
+        )}
       </div>
     );
   }
