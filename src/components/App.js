@@ -8,18 +8,7 @@ class App extends React.Component {
     this.validateInput = this.validateInput.bind(this);
     this.state = {
       error: null,
-      locations: [
-        // {
-        //   name: "South Pasadena, CA",
-        //   geocode: "34.108981,-118.156508",
-        //   timezone: "America/Los_Angeles"
-        // },
-        // {
-        //   name: "Washington, IA",
-        //   geocode: "41.299371,-91.711634",
-        //   timezone: "America/Chicago"
-        // }
-      ],
+      locations: [],
       locationsZip: []
     };
   }
@@ -50,42 +39,83 @@ class App extends React.Component {
     if (locationsZip.includes(input)) {
       return this.setState({ error: "That zip already exists" });
     }
-    this.addLocation(input);
+    this.checkLocation(input);
+  }
+
+  checkLocation(input) {
+    const { locations } = this.state;
+    const apiURL =
+      "https://api.geocod.io/v1.3/geocode/?api_key=1cd20544cdcccccd65fb524cddd00f16cd126cf&fields=timezone&q=";
+
+    fetch(apiURL + input)
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        }
+        this.setState({ error: "network error" });
+      })
+      .then(data => {
+        const city = data.results[0].address_components.city;
+        const state = data.results[0].address_components.state;
+        const latitude = data.results[0].location.lat;
+        const longitude = data.results[0].location.lng;
+        const timezone = data.results[0].fields.timezone.name;
+
+        if (data.results.length === 0) {
+          return this.setState({
+            error: "No data for this zip code"
+          });
+        }
+        this.setState({
+          locations: locations.concat({
+            name: city + ", " + state,
+            geocode: latitude + "," + longitude,
+            timezone: timezone
+          })
+        });
+        this.addLocation(input);
+      });
   }
 
   addLocation(input) {
     const { locationsZip } = this.state;
     this.setState(
-      { error: null, locationsZip: locationsZip.concat(input) },
-      this.fetchGeocode
+      { error: null, locationsZip: locationsZip.concat(input) }
+      // this.fetchGeocode
     );
   }
 
   fetchGeocode() {
-    const apiURL = "https://www.zipcodeapi.com/rest/";
-    const apiKey =
-      "js-4YEildaWSfCQ97RkfEukPAI6r4duAPNQyh2KWd3yiFXcGHGE3M2cpBHlm1u292yG/";
-    const apiFormat = "info.json/";
-    const apiUnits = "/degrees";
+    const apiURL =
+      "https://api.geocod.io/v1.3/geocode/?api_key=1cd20544cdcccccd65fb524cddd00f16cd126cf&fields=timezone&q=";
 
     const { locations, locationsZip } = this.state;
     locationsZip.map(location =>
-      fetch(apiURL + apiKey + apiFormat + location + apiUnits)
-        .then(response => response.json())
-        .then(data => {
-          if (data.ok) {
-            this.setState({
-              locations: locations.concat({
-                name: data.city + ", " + data.state,
-                geocode: data.lat + "," + data.lng,
-                timezone: data.timezone.timezone_identifier
-              })
-            });
+      fetch(apiURL + location)
+        .then(response => {
+          if (response.ok) {
+            return response.json();
           }
           this.setState({
             error: "network error"
           });
         })
+
+        .then(data => {
+          const city = data.results[0].address_components.city;
+          const state = data.results[0].address_components.state;
+          const latitude = data.results[0].location.lat;
+          const longitude = data.results[0].location.lng;
+          const timezone = data.results[0].fields.timezone.name;
+          this.setState({
+            locations: locations.concat({
+              name: city + ", " + state,
+              geocode: latitude + "," + longitude,
+              timezone: timezone
+            })
+          });
+        })
+        .catch(error => console.log(error))
     );
   }
 
