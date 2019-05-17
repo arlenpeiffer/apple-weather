@@ -58,7 +58,7 @@ class App extends React.Component {
             error: "No data for this zip code"
           });
         }
-        const { locations, selectedIndex } = this.state;
+        const { locations } = this.state;
         const city = data.results[0].address_components.city;
         const state = data.results[0].address_components.state;
         const latitude = data.results[0].location.lat;
@@ -73,22 +73,24 @@ class App extends React.Component {
           }),
           selectedIndex: locations.length
         });
-        // this.getSelectedLocation(selectedIndex);
       })
       .catch(error => console.log(error));
   }
 
   setSelectedIndex = index => {
-    this.setState({
-      selectedIndex: index
-    });
+    const { selectedIndex } = this.state;
+    if (index !== selectedIndex) {
+      this.setState({
+        selectedIndex: index
+      });
+    }
   };
 
   getSelectedLocation(index) {
-    const { locations, selectedIndex } = this.state;
+    const { locations } = this.state;
     const selectedLocation = locations[index];
     if (locations.length > 0) {
-      console.log("new component", this.state);
+      console.log("new <SelectedLocationContainer> instance", this.state);
       return (
         <SelectedLocationContainer
           geocode={selectedLocation.geocode}
@@ -101,7 +103,6 @@ class App extends React.Component {
 
   render() {
     const { error, locations, selectedIndex } = this.state;
-    const selectedLocation = locations[selectedIndex];
     return (
       <div>
         <Input validateInput={this.validateInput} />
@@ -111,13 +112,6 @@ class App extends React.Component {
           setSelectedIndex={this.setSelectedIndex}
         />
         {this.getSelectedLocation(selectedIndex)}
-        {/* {selectedLocation && (
-          <SelectedLocationContainer
-            geocode={selectedLocation.geocode}
-            name={selectedLocation.name}
-            timezone={selectedLocation.timezone}
-          />
-        )} */}
       </div>
     );
   }
