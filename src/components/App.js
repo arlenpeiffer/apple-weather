@@ -7,9 +7,11 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.validateInput = this.validateInput.bind(this);
+    this.setSelectedIndex = this.setSelectedIndex.bind(this);
     this.state = {
       error: null,
-      locations: []
+      locations: [],
+      selectedIndex: null
     };
   }
 
@@ -56,7 +58,7 @@ class App extends React.Component {
             error: "No data for this zip code"
           });
         }
-        const { locations } = this.state;
+        const { locations, selectedIndex } = this.state;
         const city = data.results[0].address_components.city;
         const state = data.results[0].address_components.state;
         const latitude = data.results[0].location.lat;
@@ -68,27 +70,54 @@ class App extends React.Component {
             name: city + ", " + state,
             geocode: latitude + "," + longitude,
             timezone: timezone
-          })
+          }),
+          selectedIndex: locations.length
         });
+        // this.getSelectedLocation(selectedIndex);
       })
       .catch(error => console.log(error));
   }
 
+  setSelectedIndex = index => {
+    this.setState({
+      selectedIndex: index
+    });
+  };
+
+  getSelectedLocation(index) {
+    const { locations, selectedIndex } = this.state;
+    const selectedLocation = locations[index];
+    if (locations.length > 0) {
+      console.log("new component", this.state);
+      return (
+        <SelectedLocationContainer
+          geocode={selectedLocation.geocode}
+          name={selectedLocation.name}
+          timezone={selectedLocation.timezone}
+        />
+      );
+    }
+  }
+
   render() {
-    const { error, locations } = this.state;
-    const last = locations[locations.length - 1];
+    const { error, locations, selectedIndex } = this.state;
+    const selectedLocation = locations[selectedIndex];
     return (
       <div>
         <Input validateInput={this.validateInput} />
         {error && <p>{error}</p>}
-        <Locations locations={locations} />
-        {locations.length > 0 && (
+        <Locations
+          locations={locations}
+          setSelectedIndex={this.setSelectedIndex}
+        />
+        {this.getSelectedLocation(selectedIndex)}
+        {/* {selectedLocation && (
           <SelectedLocationContainer
-            geocode={last.geocode}
-            name={last.name}
-            timezone={last.timezone}
+            geocode={selectedLocation.geocode}
+            name={selectedLocation.name}
+            timezone={selectedLocation.timezone}
           />
-        )}
+        )} */}
       </div>
     );
   }

@@ -10,6 +10,7 @@ function Locations(props) {
           index={index}
           key={index}
           name={location.name}
+          setSelectedIndex={props.setSelectedIndex}
           timezone={location.timezone}
         />
       ))}
