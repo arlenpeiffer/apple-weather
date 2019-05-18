@@ -3,6 +3,8 @@ import Day from "./Day";
 import Hours from "./Hours";
 import Parameter from "./Parameter";
 import Today from "./Today";
+import { Divider } from "semantic-ui-react";
+
 import "./SelectedLocation.css";
 
 function SelectedLocation(props) {
@@ -17,7 +19,9 @@ function SelectedLocation(props) {
         <p>{props.data.current.description}</p>
         <p className="current-temp">{props.data.current.currentTemp}°</p>
         <Today day={today} />
+        <Divider />
         <Hours hours={props.data.hour} />
+        <Divider />
         <div>
           {week.map(day => (
             <Day key={day.index} day={day} />

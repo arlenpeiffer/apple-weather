@@ -1,17 +1,10 @@
 .hours {
   display: flex;
-  overflow: scroll;
+  overflow-x: scroll;
+  overflow-y: hidden;
   padding-bottom: 25px;
 }
 
 .hours * {
   margin: 0 7px 0 7px;
-}
-
-.hours *:first-child {
-  margin-left: 0;
-}
-
-.hours *:last-child {
-  padding-right: 0;
 }
