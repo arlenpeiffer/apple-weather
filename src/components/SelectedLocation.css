@@ -1,3 +1,7 @@
+.selected-location {
+  margin-top: 25px;
+}
+
 .selected-location * {
   text-align: center;
 }

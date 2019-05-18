@@ -1,9 +1,3 @@
-.location {
-  display: flex;
-  font-size: 2rem;
-  text-align: center;
-}
-
 .location:hover {
   color: red;
   cursor: default;

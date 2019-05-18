@@ -1,11 +1,17 @@
 import React from "react";
+import { Icon } from "semantic-ui-react";
+
 import "./Location.css";
 
 function Location(props) {
   return (
-    <i className="location" onClick={() => props.setSelectedIndex(props.index)}>
-      •
-    </i>
+    <div className="location">
+      <Icon
+        name="circle"
+        onClick={() => props.setSelectedIndex(props.index)}
+        size="small"
+      />
+    </div>
   );
 }
 

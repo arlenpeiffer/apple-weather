@@ -1,9 +1,9 @@
 .locations {
   display: flex;
   justify-content: center;
-  overflow: scroll;
+  /* overflow: scroll; */
 }
 
 .locations * {
-  margin: 0 7px 0 7px;
+  margin: 0px 7px;
 }
