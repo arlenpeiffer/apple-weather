@@ -1,4 +1,7 @@
 import React from "react";
+import { Button, Form } from "semantic-ui-react";
+
+import "./Input.css";
 
 class Input extends React.Component {
   constructor(props) {
@@ -21,11 +24,17 @@ class Input extends React.Component {
   render() {
     const { input } = this.state;
     return (
-      <div>
-        <form onSubmit={this.onSubmit}>
-          <input onChange={this.onChange} value={input} />
-          <button>Submit</button>
-        </form>
+      <div className="input">
+        <Form onSubmit={this.onSubmit}>
+          <Form.Field>
+            <input
+              onChange={this.onChange}
+              placeholder="Enter a zip..."
+              value={input}
+            />
+          </Form.Field>
+          <Button>Submit</Button>
+        </Form>
       </div>
     );
   }

@@ -3,6 +3,8 @@ import Input from "./Input";
 import Locations from "./Locations";
 import SelectedLocationContainer from "./SelectedLocationContainer";
 
+import "./App.css";
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -104,7 +106,7 @@ class App extends React.Component {
   render() {
     const { error, locations, selectedIndex } = this.state;
     return (
-      <div>
+      <div className="center">
         <Input validateInput={this.validateInput} />
         {error && <p>{error}</p>}
         <Locations
