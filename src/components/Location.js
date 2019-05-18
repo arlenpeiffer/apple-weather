@@ -1,10 +1,11 @@
 import React from "react";
+import "./Location.css";
 
 function Location(props) {
   return (
-    <div>
-      <h1 onClick={() => props.setSelectedIndex(props.index)}>•</h1>
-    </div>
+    <i className="location" onClick={() => props.setSelectedIndex(props.index)}>
+      •
+    </i>
   );
 }
 

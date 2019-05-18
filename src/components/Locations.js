@@ -1,9 +1,10 @@
 import React from "react";
 import Location from "./Location";
+import "./Locations.css";
 
 function Locations(props) {
   return (
-    <div>
+    <div className="locations">
       {props.locations.map((location, index) => (
         <Location
           geocode={location.geocode}
