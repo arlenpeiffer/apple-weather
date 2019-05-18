@@ -3,6 +3,7 @@ import Day from "./Day";
 import Hours from "./Hours";
 import Parameter from "./Parameter";
 import Today from "./Today";
+import "./SelectedLocation.css";
 
 function SelectedLocation(props) {
   if (props.data) {
@@ -11,10 +12,10 @@ function SelectedLocation(props) {
     const week = props.data.week.slice(1);
 
     return (
-      <div>
+      <div className="selected-location">
         <h1>{props.name}</h1>
         <p>{props.data.current.description}</p>
-        <p>{props.data.current.currentTemp}°</p>
+        <p className="current-temp">{props.data.current.currentTemp}°</p>
         <Today day={today} />
         <Hours hours={props.data.hour} />
         <div>

@@ -1,0 +1,8 @@
+.selected-location * {
+  text-align: center;
+}
+
+.current-temp {
+  font-size: 4rem;
+  margin: 0;
+}
