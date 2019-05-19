@@ -18,16 +18,20 @@ function SelectedLocation(props) {
         <h1>{props.name}</h1>
         <p>{props.data.current.description}</p>
         <p className="current-temp">{props.data.current.currentTemp}°</p>
-        <Today day={today} />
+        <div className="pad">
+          <Today day={today} />
+        </div>
         <Divider />
         <Hours hours={props.data.hour} />
         <Divider />
-        <div>
+        <div className="pad">
           {week.map(day => (
             <Day key={day.index} day={day} />
           ))}
         </div>
+        <Divider />
         <p>Detailed description goes here</p>
+        <Divider />
         <Parameter title="SUNRISE" measurement={props.data.current.sunrise} />
         <Parameter title="SUNSET" measurement={props.data.current.sunset} />
         <Parameter

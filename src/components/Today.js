@@ -1,13 +1,15 @@
 import React from "react";
-import "./Day.css";
+import "./Today.css";
 
 function Today(props) {
   return (
-    <div className="row">
+    <div className="day">
       <p>{props.day.weekday}</p>
-      <p>TODAY</p>
-      <p>High: {Math.round(props.day.high) + "°"}</p>
-      <p>Low: {Math.round(props.day.low) + "°"}</p>
+      <i id="today">TODAY</i>
+      <div className="high-low">
+        <p>{Math.round(props.day.high) + "°"}</p>
+        <p>{Math.round(props.day.low) + "°"}</p>
+      </div>
     </div>
   );
 }

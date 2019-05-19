@@ -7,11 +7,13 @@ function Day(props) {
   const { high, icon, low, weekday } = props.day;
 
   return (
-    <div className="row">
+    <div className="day">
       <p>{weekday}</p>
       <i className={"wi wi-forecast-io-" + icon} />
-      <p>High: {Math.round(high) + "°"}</p>
-      <p>Low: {Math.round(low) + "°"}</p>
+      <div className="high-low">
+        <p>{Math.round(high) + "°"}</p>
+        <p>{Math.round(low) + "°"}</p>
+      </div>
     </div>
   );
 }

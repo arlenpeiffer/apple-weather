@@ -10,3 +10,8 @@
   font-size: 4rem;
   margin: 0;
 }
+
+.pad * {
+  margin-left: 7px;
+  margin-right: 7px;
+}
