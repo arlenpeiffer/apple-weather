@@ -1,9 +1,14 @@
 .locations {
   display: flex;
   justify-content: center;
-  /* overflow: scroll; */
+  padding: 14px 0 14px 0;
+  overflow-x: scroll;
 }
 
 .locations * {
   margin: 0px 7px;
+}
+
+.locations::-webkit-scrollbar {
+  display: none;
 }

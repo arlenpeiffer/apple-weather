@@ -106,7 +106,7 @@ class App extends React.Component {
   render() {
     const { error, locations, selectedIndex } = this.state;
     return (
-      <div className="center margin">
+      <div className="container">
         <Input validateInput={this.validateInput} />
         {error && <p>{error}</p>}
         <Locations

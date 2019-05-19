@@ -1,10 +1,14 @@
 .hours {
   display: flex;
   overflow-x: scroll;
-  overflow-y: hidden;
-  padding-bottom: 25px;
+  /* overflow-y: hidden; */
+  /* padding-bottom: 25px; */
 }
 
 .hours * {
   margin: 0 7px 0 7px;
+}
+
+.hours::-webkit-scrollbar {
+  display: none;
 }
