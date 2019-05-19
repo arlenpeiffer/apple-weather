@@ -225,8 +225,12 @@ class SelectedLocationContainer extends React.Component {
   render() {
     console.log("SelectedLocationContainer render()", this.props, this.state);
     const { data, loading } = this.state;
+    const paddingTop = {
+      padding: "25px 0 0 0"
+    };
+
     if (loading) {
-      return <p>Loading..</p>;
+      return <p style={paddingTop}>Loading..</p>;
     } else {
       return <SelectedLocation name={this.props.name} data={data} />;
     }

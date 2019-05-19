@@ -21,14 +21,17 @@ function SelectedLocation(props) {
         <div className="pad">
           <Today day={today} />
         </div>
+
         <Divider />
         <Hours hours={props.data.hour} />
         <Divider />
+
         <div className="pad">
           {week.map(day => (
             <Day key={day.index} day={day} />
           ))}
         </div>
+
         <Divider />
         <p>Detailed description goes here</p>
         <Divider />
@@ -106,7 +109,6 @@ function SelectedLocation(props) {
                 measurement={props.data.current.uvIndex}
               />
             </div>
-            <Divider />
           </div>
         </div>
       </div>
