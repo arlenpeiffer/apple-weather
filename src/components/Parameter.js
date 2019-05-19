@@ -1,12 +1,11 @@
 import React from "react";
+import "./Parameter.css";
 
 function Parameter(props) {
   return (
     <div>
-      <p>
-        <b>{props.title}</b>
-      </p>
-      <p>{props.measurement}</p>
+      <p className="title">{props.title}</p>
+      <p className="measurement">{props.measurement}</p>
     </div>
   );
 }

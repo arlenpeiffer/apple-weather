@@ -32,42 +32,83 @@ function SelectedLocation(props) {
         <Divider />
         <p>Detailed description goes here</p>
         <Divider />
-        <Parameter title="SUNRISE" measurement={props.data.current.sunrise} />
-        <Parameter title="SUNSET" measurement={props.data.current.sunset} />
-        <Parameter
-          title="CHANCE OF RAIN"
-          measurement={props.data.current.precipitationChance + "%"}
-        />
-        <Parameter
-          title="HUMIDITY"
-          measurement={props.data.current.humidity + "%"}
-        />
-        <Parameter
-          title="WIND"
-          measurement={
-            props.data.current.wind.direction +
-            " " +
-            props.data.current.wind.speed +
-            " mph"
-          }
-        />
-        <Parameter
-          title="FEELS LIKE"
-          measurement={props.data.current.feelsLike + "°"}
-        />
-        <Parameter
-          title="PRECIPITATION"
-          measurement={props.data.current.precipitation + " in"}
-        />
-        <Parameter
-          title="PRESSURE"
-          measurement={props.data.current.pressure + " inHg"}
-        />
-        <Parameter
-          title="VISIBILITY"
-          measurement={props.data.current.visibility + " mi"}
-        />
-        <Parameter title="UV INDEX" measurement={props.data.current.uvIndex} />
+
+        <div className="pad">
+          <div className="parameter-container">
+            <div className="parameter-row">
+              <Parameter
+                title="SUNRISE"
+                measurement={props.data.current.sunrise}
+              />
+              <Parameter
+                title="SUNSET"
+                measurement={props.data.current.sunset}
+              />
+            </div>
+            <Divider />
+          </div>
+
+          <div className="parameter-container">
+            <div className="parameter-row">
+              <Parameter
+                title="CHANCE OF RAIN"
+                measurement={props.data.current.precipitationChance + "%"}
+              />
+              <Parameter
+                title="HUMIDITY"
+                measurement={props.data.current.humidity + "%"}
+              />
+            </div>
+            <Divider />
+          </div>
+
+          <div className="parameter-container">
+            <div className="parameter-row">
+              <Parameter
+                title="WIND"
+                measurement={
+                  props.data.current.wind.direction +
+                  " " +
+                  props.data.current.wind.speed +
+                  " mph"
+                }
+              />
+              <Parameter
+                title="FEELS LIKE"
+                measurement={props.data.current.feelsLike + "°"}
+              />
+            </div>
+            <Divider />
+          </div>
+
+          <div className="parameter-container">
+            <div className="parameter-row">
+              <Parameter
+                title="PRECIPITATION"
+                measurement={props.data.current.precipitation + " in"}
+              />
+              <Parameter
+                title="PRESSURE"
+                measurement={props.data.current.pressure + " inHg"}
+              />
+            </div>
+            <Divider />
+          </div>
+
+          <div className="parameter-container">
+            <div className="parameter-row">
+              <Parameter
+                title="VISIBILITY"
+                measurement={props.data.current.visibility + " mi"}
+              />
+              <Parameter
+                title="UV INDEX"
+                measurement={props.data.current.uvIndex}
+              />
+            </div>
+            <Divider />
+          </div>
+        </div>
       </div>
     );
   }
