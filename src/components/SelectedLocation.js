@@ -32,7 +32,7 @@ function SelectedLocation(props) {
         </div>
 
         <Divider />
-        <p>Detailed description goes here</p>
+        <p>{props.data.current.summary}</p>
         <Divider />
 
         <div className="pad">

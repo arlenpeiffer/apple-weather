@@ -183,6 +183,7 @@ class SelectedLocationContainer extends React.Component {
               precipitation: data.currently.precipIntensity,
               precipitationChance: data.currently.precipProbability,
               pressure: this.convertPressure(data.currently.pressure),
+              summary: data.daily.data[0].summary,
               sunrise: this.convertUnix(
                 data.daily.data[0].sunriseTime * 1000,
                 "h:mm A"
