@@ -1,11 +1,9 @@
 import React from "react";
-
-import "./Hour.css";
 import "../weather-icons/css/weather-icons.css";
+import "./Hour.css";
 
 function Hour(props) {
   const { description, icon, temp, time } = props.hour;
-
   return (
     <div className="hour">
       <p>{time}</p>

@@ -92,7 +92,6 @@ class App extends React.Component {
     const { locations } = this.state;
     const selectedLocation = locations[index];
     if (locations.length > 0) {
-      console.log("new <SelectedLocationContainer> instance", this.state);
       return (
         <SelectedLocationContainer
           geocode={selectedLocation.geocode}

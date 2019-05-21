@@ -1,8 +1,6 @@
 .hours {
   display: flex;
   overflow-x: scroll;
-  /* overflow-y: hidden; */
-  /* padding-bottom: 25px; */
 }
 
 .hours * {

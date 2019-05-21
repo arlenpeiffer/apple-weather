@@ -1,6 +1,6 @@
 import React from "react";
-import SelectedLocation from "./SelectedLocation";
 import moment from "moment-timezone";
+import SelectedLocation from "./SelectedLocation";
 
 class SelectedLocationContainer extends React.Component {
   constructor(props) {
@@ -16,7 +16,6 @@ class SelectedLocationContainer extends React.Component {
     return inHg.toFixed(2);
   }
 
-  // FOR LATER: FIND A BETTER/SIMPLER WAY TO CONVERT WIND BEARING //
   convertWindBearing(degree) {
     if (degree >= 348.75 && degree < 11.25) {
       return "N";
@@ -152,7 +151,6 @@ class SelectedLocationContainer extends React.Component {
     if (this.props.geocode !== nextProps.geocode) {
       this.setState({ loading: true }, this.fetchData());
     }
-    console.log("nextProps same as props");
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -163,7 +161,6 @@ class SelectedLocationContainer extends React.Component {
   }
 
   fetchData() {
-    console.log("fetchData running");
     const proxy = "https://cors-anywhere.herokuapp.com/";
     const api =
       "https://api.darksky.net/forecast/1b3d30bceaa757a136e3c1dfad9801d8/";
@@ -223,14 +220,13 @@ class SelectedLocationContainer extends React.Component {
   }
 
   render() {
-    console.log("SelectedLocationContainer render()", this.props, this.state);
     const { data, loading } = this.state;
-    const paddingTop = {
+    const loadingPadding = {
       padding: "25px 0 0 0"
     };
 
     if (loading) {
-      return <p style={paddingTop}>Loading..</p>;
+      return <p style={loadingPadding}>Loading..</p>;
     } else {
       return <SelectedLocation name={this.props.name} data={data} />;
     }

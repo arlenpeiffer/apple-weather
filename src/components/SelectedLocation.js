@@ -1,10 +1,9 @@
 import React from "react";
+import { Divider } from "semantic-ui-react";
 import Day from "./Day";
 import Hours from "./Hours";
 import Parameter from "./Parameter";
 import Today from "./Today";
-import { Divider } from "semantic-ui-react";
-
 import "./SelectedLocation.css";
 
 function SelectedLocation(props) {

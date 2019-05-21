@@ -1,11 +1,9 @@
 import React from "react";
-
-import "./Day.css";
 import "../weather-icons/css/weather-icons.css";
+import "./Day.css";
 
 function Day(props) {
   const { high, icon, low, weekday } = props.day;
-
   return (
     <div className="day">
       <p>{weekday}</p>

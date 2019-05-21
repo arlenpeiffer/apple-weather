@@ -1,14 +1,5 @@
-/* .center {
-  text-align: center;
-}
-
-.margin {
-  margin-left: 20%;
-  margin-right: 20%;
-} */
-
 .container {
   margin: 0 auto;
   text-align: center;
-  width: 419px;
+  width: 425px;
 }
