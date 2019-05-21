@@ -27,3 +27,7 @@
 .high-low *:last-child {
   text-align: right;
 }
+
+.low {
+  color: #a9a9a9;
+}

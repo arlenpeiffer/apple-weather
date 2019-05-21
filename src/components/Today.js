@@ -7,8 +7,8 @@ function Today(props) {
       <p>{props.day.weekday}</p>
       <i>TODAY</i>
       <div className="high-low">
-        <p>{Math.round(props.day.high) + "°"}</p>
-        <p>{Math.round(props.day.low) + "°"}</p>
+        <p className="high">{Math.round(props.day.high) + "°"}</p>
+        <p className="low">{Math.round(props.day.low) + "°"}</p>
       </div>
     </div>
   );
