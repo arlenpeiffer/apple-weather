@@ -1,9 +1,8 @@
-import React from "react";
-import Input from "./Input";
-import Locations from "./Locations";
-import SelectedLocationContainer from "./SelectedLocationContainer";
-
-import "./App.css";
+import React from 'react';
+import Input from './Input';
+import Locations from './Locations';
+import SelectedLocationContainer from './SelectedLocationContainer';
+import './App.css';
 
 class App extends React.Component {
   constructor(props) {
@@ -21,10 +20,10 @@ class App extends React.Component {
     if (isNaN(input)) {
       return this.onValidationFailure();
     }
-    if (input.includes(".")) {
+    if (input.includes('.')) {
       return this.onValidationFailure();
     }
-    if (input.trim() === "") {
+    if (input.trim() === '') {
       return this.onValidationFailure();
     }
     if (input.length !== 5) {
@@ -35,7 +34,7 @@ class App extends React.Component {
   }
   onValidationFailure() {
     this.setState({
-      error: "Please enter a valid 5 digit zip code"
+      error: 'Please enter a valid 5 digit zip code'
     });
   }
   onValidationSuccess(input) {
@@ -44,20 +43,20 @@ class App extends React.Component {
 
   fetchGeocode(zip) {
     const apiURL =
-      "https://api.geocod.io/v1.3/geocode/?api_key=1cd20544cdcccccd65fb524cddd00f16cd126cf&fields=timezone&q=";
+      'https://api.geocod.io/v1.3/geocode/?api_key=1cd20544cdcccccd65fb524cddd00f16cd126cf&fields=timezone&q=';
     fetch(apiURL + zip)
       .then(response => {
         if (response.ok) {
           return response.json();
         }
         this.setState({
-          error: "network error"
+          error: 'network error'
         });
       })
       .then(data => {
         if (data.results.length === 0) {
           return this.setState({
-            error: "No data for this zip code"
+            error: 'No data for this zip code'
           });
         }
         const { locations } = this.state;
@@ -69,8 +68,8 @@ class App extends React.Component {
         this.setState({
           error: null,
           locations: locations.concat({
-            name: city + ", " + state,
-            geocode: latitude + "," + longitude,
+            name: city + ', ' + state,
+            geocode: latitude + ',' + longitude,
             timezone: timezone
           }),
           selectedIndex: locations.length

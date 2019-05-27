@@ -1,6 +1,6 @@
-import React from "react";
-import Location from "./Location";
-import "./Locations.css";
+import React from 'react';
+import Location from './Location';
+import './Locations.css';
 
 function Locations(props) {
   return (

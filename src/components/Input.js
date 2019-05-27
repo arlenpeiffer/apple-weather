@@ -1,6 +1,6 @@
-import React from "react";
-import { Button, Form } from "semantic-ui-react";
-import "./Input.css";
+import React from 'react';
+import { Button, Form } from 'semantic-ui-react';
+import './Input.css';
 
 class Input extends React.Component {
   constructor(props) {
@@ -8,7 +8,7 @@ class Input extends React.Component {
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.state = {
-      input: ""
+      input: ''
     };
   }
   onChange(event) {
@@ -18,7 +18,7 @@ class Input extends React.Component {
     event.preventDefault();
     const { input } = this.state;
     this.props.validateInput(input);
-    this.setState({ input: "" });
+    this.setState({ input: '' });
   }
   render() {
     const { input } = this.state;

@@ -1,5 +1,5 @@
-import React from "react";
-import "./Parameter.css";
+import React from 'react';
+import './Parameter.css';
 
 function Parameter(props) {
   return (

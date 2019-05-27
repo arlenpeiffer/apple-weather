@@ -1,6 +1,6 @@
-import React from "react";
-import { Icon } from "semantic-ui-react";
-import "./Location.css";
+import React from 'react';
+import { Icon } from 'semantic-ui-react';
+import './Location.css';
 
 function Location(props) {
   return (

@@ -1,6 +1,6 @@
-import React from "react";
-import "../weather-icons/css/weather-icons.css";
-import "./Hour.css";
+import React from 'react';
+import './Hour.css';
+import '../weather-icons/css/weather-icons.css';
 
 function Hour(props) {
   const { description, icon, temp, time } = props.hour;
@@ -8,9 +8,9 @@ function Hour(props) {
     <div className="hour">
       <p>{time}</p>
       {description ? (
-        <i className={"wi wi-" + icon} />
+        <i className={'wi wi-' + icon} />
       ) : (
-        <i className={"wi wi-forecast-io-" + icon} />
+        <i className={'wi wi-forecast-io-' + icon} />
       )}
       <p>{temp || description}</p>
     </div>
