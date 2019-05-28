@@ -1,9 +1,8 @@
 import React from 'react';
 import { Divider } from 'semantic-ui-react';
-import Day from './Day';
+import Day from './Day/index';
 import Hours from './Hours';
 import Parameter from './Parameter';
-import Today from './Today';
 import './SelectedLocation.css';
 
 function SelectedLocation(props) {
@@ -18,7 +17,7 @@ function SelectedLocation(props) {
         <p>{props.data.current.description}</p>
         <p className="current-temp">{props.data.current.currentTemp}</p>
         <div className="pad">
-          <Today day={today} />
+          <Day day={today} today />
         </div>
 
         <Divider />
@@ -27,7 +26,7 @@ function SelectedLocation(props) {
 
         <div className="pad">
           {week.map(day => (
-            <Day key={day.index} day={day} />
+            <Day key={day.dayOfWeek} day={day} />
           ))}
         </div>
 

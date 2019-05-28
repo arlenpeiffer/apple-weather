@@ -205,12 +205,11 @@ class SelectedLocationContainer extends React.Component {
               data.daily.data.slice(0, 2),
               data.currently.time
             ),
-            week: data.daily.data.map((day, index) => ({
-              icon: day.icon,
-              index: index,
+            week: data.daily.data.map(day => ({
+              dayOfWeek: this.convertUnix(day.time * 1000, 'dddd'),
               high: `${Math.round(day.temperatureHigh)}°`,
-              low: `${Math.round(day.temperatureLow)}°`,
-              weekday: this.convertUnix(day.time * 1000, 'dddd')
+              icon: day.icon,
+              low: `${Math.round(day.temperatureLow)}°`
             }))
           },
           error: null,
