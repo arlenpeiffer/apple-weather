@@ -1,6 +1,6 @@
 import React from 'react';
-import Hour from './Hour';
-import './Hours.css';
+import { Hour } from '../Hour';
+import './Hours.scss';
 
 function Hours(props) {
   return (

@@ -1,6 +1,6 @@
 import React from 'react';
-import Location from './Location';
-import './Locations.css';
+import { Location } from '../Location';
+import './Locations.scss';
 
 function Locations(props) {
   return (

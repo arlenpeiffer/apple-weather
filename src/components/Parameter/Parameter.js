@@ -1,5 +1,5 @@
 import React from 'react';
-import './Parameter.css';
+import './Parameter.scss';
 
 function Parameter(props) {
   return (

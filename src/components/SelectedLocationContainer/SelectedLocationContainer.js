@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment-timezone';
-import SelectedLocation from './SelectedLocation';
+import SelectedLocation from '../SelectedLocation/SelectedLocation';
 
 class SelectedLocationContainer extends React.Component {
   constructor(props) {

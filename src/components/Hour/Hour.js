@@ -1,6 +1,6 @@
 import React from 'react';
-import './Hour.css';
-import '../weather-icons/css/weather-icons.css';
+import './Hour.scss';
+import './../../weather-icons/css/weather-icons.css';
 
 function Hour(props) {
   const { description, icon, temp, time } = props.hour;

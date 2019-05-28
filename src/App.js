@@ -1,8 +1,8 @@
 import React from 'react';
-import Input from './Input';
-import Locations from './Locations';
-import SelectedLocationContainer from './SelectedLocationContainer';
-import './App.css';
+import { Input } from './components/Input';
+import { Locations } from './components/Locations';
+import { SelectedLocationContainer } from './components/SelectedLocationContainer';
+import './App.scss';
 
 class App extends React.Component {
   constructor(props) {

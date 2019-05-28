@@ -1,9 +1,9 @@
 import React from 'react';
 import { Divider } from 'semantic-ui-react';
-import Day from './Day/index';
-import Hours from './Hours';
-import Parameter from './Parameter';
-import './SelectedLocation.css';
+import { Day } from '../Day';
+import { Hours } from '../Hours';
+import { Parameter } from '../Parameter';
+import './SelectedLocation.scss';
 
 function SelectedLocation(props) {
   if (props.data) {
