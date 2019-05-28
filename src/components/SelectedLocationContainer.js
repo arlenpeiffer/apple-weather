@@ -113,7 +113,7 @@ class SelectedLocationContainer extends React.Component {
         return {
           icon: hour.icon,
           index: index,
-          temp: Math.round(hour.temperature) + '°',
+          temp: `${Math.round(hour.temperature)}°`,
           time: 'Now'
         };
         // SUNRISE
@@ -137,7 +137,7 @@ class SelectedLocationContainer extends React.Component {
       return {
         icon: hour.icon,
         index: index,
-        temp: Math.round(hour.temperature) + '°',
+        temp: `${Math.round(hour.temperature)}°`,
         time: this.convertUnix(hour.time * 1000, 'hA')
       };
     });
@@ -175,14 +175,14 @@ class SelectedLocationContainer extends React.Component {
         this.setState({
           data: {
             current: {
-              currentTemp: Math.round(data.currently.temperature),
+              currentTemp: `${Math.round(data.currently.temperature)}°`,
               description: data.currently.summary,
-              feelsLike: Math.round(data.currently.apparentTemperature),
-              humidity: Math.round(data.currently.humidity * 100),
+              feelsLike: `${Math.round(data.currently.apparentTemperature)}°`,
+              humidity: `${Math.round(data.currently.humidity * 100)}%`,
               icon: data.currently.icon,
-              precipitation: data.currently.precipIntensity,
-              precipitationChance: data.currently.precipProbability,
-              pressure: this.convertPressure(data.currently.pressure),
+              precipitation: `${data.currently.precipIntensity} in`,
+              precipitationChance: `${data.currently.precipProbability}%`,
+              pressure: `${this.convertPressure(data.currently.pressure)} inHg`,
               summary: data.daily.data[0].summary,
               sunrise: this.convertUnix(
                 data.daily.data[0].sunriseTime * 1000,
@@ -194,11 +194,10 @@ class SelectedLocationContainer extends React.Component {
               ),
               timezone: data.timezone,
               uvIndex: data.currently.uvIndex,
-              visibility: Math.round(data.currently.visibility),
-              wind: {
-                direction: this.convertWindBearing(data.currently.windBearing),
-                speed: Math.round(data.currently.windSpeed)
-              }
+              visibility: `${Math.round(data.currently.visibility)} mi`,
+              wind: `${this.convertWindBearing(
+                data.currently.windBearing
+              )} ${Math.round(data.currently.windSpeed)} mph`
             },
             hour: this.create24HourForecast(
               data.hourly.data,
@@ -209,8 +208,8 @@ class SelectedLocationContainer extends React.Component {
             week: data.daily.data.map((day, index) => ({
               icon: day.icon,
               index: index,
-              high: day.temperatureHigh,
-              low: day.temperatureLow,
+              high: `${Math.round(day.temperatureHigh)}°`,
+              low: `${Math.round(day.temperatureLow)}°`,
               weekday: this.convertUnix(day.time * 1000, 'dddd')
             }))
           },

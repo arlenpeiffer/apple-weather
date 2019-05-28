@@ -9,8 +9,8 @@ function Day(props) {
       <p>{weekday}</p>
       <i className={'wi wi-forecast-io-' + icon} />
       <div className="high-low">
-        <p className="high">{Math.round(high) + '°'}</p>
-        <p className="low">{Math.round(low) + '°'}</p>
+        <p className="high">{high}}</p>
+        <p className="low">{low}</p>
       </div>
     </div>
   );

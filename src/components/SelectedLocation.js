@@ -16,7 +16,7 @@ function SelectedLocation(props) {
       <div className="selected-location">
         <h1>{props.name}</h1>
         <p>{props.data.current.description}</p>
-        <p className="current-temp">{props.data.current.currentTemp}°</p>
+        <p className="current-temp">{props.data.current.currentTemp}</p>
         <div className="pad">
           <Today day={today} />
         </div>
@@ -54,11 +54,11 @@ function SelectedLocation(props) {
             <div className="parameter-row">
               <Parameter
                 title="CHANCE OF RAIN"
-                measurement={props.data.current.precipitationChance + '%'}
+                measurement={props.data.current.precipitationChance}
               />
               <Parameter
                 title="HUMIDITY"
-                measurement={props.data.current.humidity + '%'}
+                measurement={props.data.current.humidity}
               />
             </div>
             <Divider />
@@ -66,18 +66,10 @@ function SelectedLocation(props) {
 
           <div className="parameter-container">
             <div className="parameter-row">
-              <Parameter
-                title="WIND"
-                measurement={
-                  props.data.current.wind.direction +
-                  ' ' +
-                  props.data.current.wind.speed +
-                  ' mph'
-                }
-              />
+              <Parameter title="WIND" measurement={props.data.current.wind} />
               <Parameter
                 title="FEELS LIKE"
-                measurement={props.data.current.feelsLike + '°'}
+                measurement={props.data.current.feelsLike}
               />
             </div>
             <Divider />
@@ -87,11 +79,11 @@ function SelectedLocation(props) {
             <div className="parameter-row">
               <Parameter
                 title="PRECIPITATION"
-                measurement={props.data.current.precipitation + ' in'}
+                measurement={props.data.current.precipitation}
               />
               <Parameter
                 title="PRESSURE"
-                measurement={props.data.current.pressure + ' inHg'}
+                measurement={props.data.current.pressure}
               />
             </div>
             <Divider />
@@ -101,7 +93,7 @@ function SelectedLocation(props) {
             <div className="parameter-row">
               <Parameter
                 title="VISIBILITY"
-                measurement={props.data.current.visibility + ' mi'}
+                measurement={props.data.current.visibility}
               />
               <Parameter
                 title="UV INDEX"
